@@ -37,49 +37,61 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
             android:text="Spotify Streamer" />
 
         <Button
+            android:id="@+id/scores_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
             android:text="Scores App" />
 
         <Button
+            android:id="@+id/library_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
             android:text="Library App" />
 
         <Button
+            android:id="@+id/bigger_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
             android:text="Build it Bigger" />
 
         <Button
+            android:id="@+id/xyz_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
-            android:text="XYZ" />
+            android:text="XYZ Reader" />
 
         <Button
+            android:id="@+id/capstone_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:onClick="onClick"
             android:padding="24dp"
-            android:theme="@style/LastButton"
-            android:text="Capstone: My Own App" />
+            android:text="Capstone: My Own App"
+            style="@style/LastButton"
+             />
     </LinearLayout>
 
 </ScrollView>

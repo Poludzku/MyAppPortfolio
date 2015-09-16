@@ -9,11 +9,8 @@
         <item name="colorButtonNormal">#FF0000</item>
     </style>
 
-    <style name="LastButton" parent="AppTheme">
-        <item name="colorPrimary">#B71C1C</item>
-        <item name="colorPrimaryDark">#D50000</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">#FFFF00</item>
+    <style name="LastButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:backgroundTint">#FFFF00</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
