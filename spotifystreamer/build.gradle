@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def project_properties = new Properties()
+project_properties.load(new FileInputStream(rootProject.file("${rootProject.projectDir}/android-nano-degree-keys.properties")))
+println("key: ${project_properties.movie_db_key}")
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
