@@ -34,6 +34,11 @@ public class DashboardFragment extends Fragment {
         DUMMY_LIST.add(new Movie(8, "A8", "B8"));
         DUMMY_LIST.add(new Movie(9, "A9", "B9"));
         DUMMY_LIST.add(new Movie(10, "A10", "B10"));
+        DUMMY_LIST.add(new Movie(11, "A11", "B11"));
+        DUMMY_LIST.add(new Movie(12, "A12", "B12"));
+        DUMMY_LIST.add(new Movie(13, "A13", "B13"));
+        DUMMY_LIST.add(new Movie(14, "A14", "B14"));
+        DUMMY_LIST.add(new Movie(15, "A15", "B15"));
     }
 
     private RecyclerView mRecyclerView;
