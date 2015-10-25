@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,17 @@ import android.view.ViewGroup;
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Call;
+import retrofit.Response;
 
 /**
  * Created by greed on 19/09/15.
  */
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements MovieController {
 
     public static final String TAG = "DashboardFragment";
     private static final List<Movie> DUMMY_LIST = new ArrayList<>();
@@ -41,9 +46,17 @@ public class DashboardFragment extends Fragment {
         DUMMY_LIST.add(new Movie(15, "A15", "B15"));
     }
 
+    RetrofitHelper retrofitHelper;
     private RecyclerView mRecyclerView;
+
     public static DashboardFragment getInstance() {
         return new DashboardFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        inject();
     }
 
     @Nullable
@@ -58,5 +71,26 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mRecyclerView.setAdapter(new MovieAdapter(DUMMY_LIST));
+        downloadMovies();
+    }
+
+    private void inject() {
+        retrofitHelper = new RetrofitHelper(new MovieApiFactory().getMovieApi());
+    }
+
+    @Override
+    public void downloadMovies() {
+        Call<List<Movie>> call = retrofitHelper.downloadMovies();
+        try {
+            Response<List<Movie>> response = call.execute();
+        } catch (IOException e) {
+            Log.e("Jacek", e.getLocalizedMessage());
+
+        }
+    }
+
+    @Override
+    public void onMoviesDownloaded(List<Movie> movies) {
+
     }
 }

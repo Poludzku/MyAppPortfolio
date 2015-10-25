@@ -7,16 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.ui.dashboard.DashboardFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.poludzku.spotifystreamer.ui.dashboard.RetrofitHelper;
 
 public class MainActivity extends AppCompatActivity {
 
 
-
+    RetrofitHelper retrofitHelper;
 
 
     @Override
@@ -48,4 +45,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
