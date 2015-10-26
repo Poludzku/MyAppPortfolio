@@ -1,11 +1,9 @@
 package com.poludzku.spotifystreamer.ui.dashboard;
 
 import com.example.greed.spotifystreamer.BuildConfig;
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.io.model.MovieResponse;
 
-import java.util.List;
-
-import retrofit.Call;
+import rx.Observable;
 
 /**
  * Created by greed on 06/10/15.
@@ -17,7 +15,7 @@ public class RetrofitHelper {
         mMovieApi = movieApi;
     }
 
-    public Call<List<Movie>> downloadMovies() {
+    public Observable<MovieResponse> downloadMovies() {
         return mMovieApi.getMovies(BuildConfig.MOVIE_KEY);
     }
 

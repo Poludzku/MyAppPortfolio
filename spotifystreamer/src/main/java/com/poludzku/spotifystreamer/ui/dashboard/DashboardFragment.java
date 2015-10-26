@@ -12,13 +12,15 @@ import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.io.model.MovieResponse;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Response;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by greed on 19/09/15.
@@ -47,6 +49,7 @@ public class DashboardFragment extends Fragment implements MovieController {
     }
 
     RetrofitHelper retrofitHelper;
+    Subscription subscription;
     private RecyclerView mRecyclerView;
 
     public static DashboardFragment getInstance() {
@@ -65,12 +68,12 @@ public class DashboardFragment extends Fragment implements MovieController {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRecyclerView.setOnClickListener(v -> v.setEnabled(false));
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mRecyclerView.setAdapter(new MovieAdapter(DUMMY_LIST));
         downloadMovies();
     }
 
@@ -80,13 +83,13 @@ public class DashboardFragment extends Fragment implements MovieController {
 
     @Override
     public void downloadMovies() {
-        Call<List<Movie>> call = retrofitHelper.downloadMovies();
-        try {
-            Response<List<Movie>> response = call.execute();
-        } catch (IOException e) {
-            Log.e("Jacek", e.getLocalizedMessage());
-
-        }
+        Observable<MovieResponse> observable = retrofitHelper.downloadMovies();
+        subscription = observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(
+                movieResponse -> {
+                    mRecyclerView.setAdapter(new MovieAdapter(movieResponse.getResults()));
+                },
+                throwable -> Log.e("spotifystreamer", "networksucks " + throwable.getLocalizedMessage())
+        );
     }
 
     @Override
