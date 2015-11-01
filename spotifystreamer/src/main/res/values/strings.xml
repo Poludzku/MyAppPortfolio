@@ -4,4 +4,6 @@
     <string name="endpoint_uri">http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&amp;api_key=</string>
     <string name="sort_by_rating">Sort by Rating</string>
     <string name="sort_by_popularity">Sort by Popularity</string>
+    <string name="action_bar_title_sort_by_rating">Spotify Streamer - Sorted by rating</string>
+    <string name="action_bar_title_sort_by_popularity">Spotify Streamer - Sorted by popularity</string>
 </resources>

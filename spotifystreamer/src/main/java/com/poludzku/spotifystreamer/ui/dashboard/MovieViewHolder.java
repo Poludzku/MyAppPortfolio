@@ -17,11 +17,11 @@ public class MovieViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         imageView = (ImageView) itemView.findViewById(R.id.poster);
         this.listener = listener;
-        itemView.setOnClickListener(v -> listener.onClick(v, getAdapterPosition()));
+        itemView.setOnClickListener(v -> listener.onClick(getAdapterPosition()));
 
     }
 
     public interface OnClick {
-        void onClick(View caller, int id);
+        void onClick(int id);
     }
 }

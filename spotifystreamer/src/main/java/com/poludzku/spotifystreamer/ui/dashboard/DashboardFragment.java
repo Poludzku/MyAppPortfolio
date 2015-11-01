@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
@@ -29,8 +30,10 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
 
     public static final String TAG = "DashboardFragment";
 
+
     private static final int SORT_BY_POPULARITY = 0;
     private static final int SORT_BY_RATING = 1;
+    private static final String SORT_ORDER_EXTRA = "sort_order_extra";
 
 
     private final MovieAdapter adapter = new MovieAdapter(this);
@@ -59,6 +62,10 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mRecyclerView.setAdapter(adapter);
+        if (savedInstanceState != null) {
+            sortOrder = savedInstanceState.getInt(SORT_ORDER_EXTRA);
+        }
+
         return view;
     }
 
@@ -67,6 +74,12 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
         downloadMovies();
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SORT_ORDER_EXTRA, sortOrder);
+    }
 
     @Override
     public void onDestroy() {
@@ -107,7 +120,10 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                         this::onMoviesDownloaded,
-                        throwable -> Log.e("spotifystreamer", "networksucks " + throwable.getLocalizedMessage())
+                        throwable -> {
+                            Log.e("spotifystreamer", "networksucks " + throwable.getLocalizedMessage());
+                            Toast.makeText(getActivity(), "Couldn't download anything...", Toast.LENGTH_LONG).show();
+                        }
                 );
     }
 
@@ -115,13 +131,12 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
     public void onMoviesDownloaded(MovieResponse movieResponse) {
         adapter.setMovies(movieResponse.getResults());
         if (movieResponse.getResults().size() > 0 && getResources().getBoolean(R.bool.isTablet)) {
-            onClick(null, 0);
+            onClick(0);
         }
     }
 
     @Override
-    public void onClick(View caller, int id) {
-        Log.d("S", "item:" + adapter.getMovie(id) + " id" + id);
+    public void onClick(int id) {
         Movie movie = adapter.getMovie(id);
         Fragment topFragment = getFragmentManager().findFragmentByTag(MovieFragment.TAG);
         FragmentTransaction ft = getFragmentManager().beginTransaction();

@@ -1,5 +1,6 @@
 package com.poludzku.spotifystreamer.ui;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
-        ft.commit();
+        Fragment fragment = getFragmentManager().findFragmentByTag(DashboardFragment.TAG);
+        if (fragment == null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
+            ft.commit();
+        }
+
     }
 
     @Override
