@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -28,11 +29,17 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
 
     public static final String TAG = "DashboardFragment";
 
+    private static final int SORT_BY_POPULARITY = 0;
+    private static final int SORT_BY_RATING = 1;
+
+
     private final MovieAdapter adapter = new MovieAdapter(this);
 
     private RetrofitHelper retrofitHelper;
     private Subscription subscription;
     private RecyclerView mRecyclerView;
+
+    private int sortOrder = SORT_BY_POPULARITY;
 
     public static DashboardFragment getInstance() {
         return new DashboardFragment();
@@ -42,6 +49,7 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         inject();
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -64,8 +72,27 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_by_popularity:
+                sortOrder = SORT_BY_POPULARITY;
+                downloadMovies();
+                return true;
+            case R.id.sort_by_rating:
+                sortOrder = SORT_BY_RATING;
+                downloadMovies();
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    @Override
     public void downloadMovies() {
-        Observable<MovieResponse> observable = retrofitHelper.downloadMovies();
+        Observable<MovieResponse> observable =
+                (sortOrder == SORT_BY_POPULARITY) ? retrofitHelper.downloadMoviesByPopularity()
+                        : retrofitHelper.downloadMoviesByRating();
         subscription = observable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

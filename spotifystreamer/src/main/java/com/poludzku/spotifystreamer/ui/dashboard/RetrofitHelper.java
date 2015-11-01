@@ -15,8 +15,12 @@ public class RetrofitHelper {
         mMovieApi = movieApi;
     }
 
-    public Observable<MovieResponse> downloadMovies() {
-        return mMovieApi.getMovies(BuildConfig.MOVIE_KEY);
+    public Observable<MovieResponse> downloadMoviesByPopularity() {
+        return mMovieApi.getMoviesByPopularity(BuildConfig.MOVIE_KEY);
+    }
+
+    public Observable<MovieResponse> downloadMoviesByRating() {
+        return mMovieApi.getMoviesByRating(BuildConfig.MOVIE_KEY);
     }
 
 }
