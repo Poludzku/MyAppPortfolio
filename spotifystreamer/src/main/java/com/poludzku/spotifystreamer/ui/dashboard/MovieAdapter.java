@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,23 +16,36 @@ import java.util.List;
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
-    private List<Movie> movies;
+    private final List<Movie> movies = new ArrayList<>();
 
-    public MovieAdapter(List<Movie> movies){
-        this.movies = movies;
+    private final MovieViewHolder.OnClick listener;
+
+    public MovieAdapter(MovieViewHolder.OnClick listener) {
+        this.listener = listener;
     }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies.clear();
+        this.movies.addAll(movies);
+        notifyDataSetChanged();
+    }
+
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(view, listener);
 
     }
 
+    public Movie getMovie(int id) {
+        return movies.get(id);
+    }
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
         holder.title.setText(movie.getTitle());
         holder.release.setText(movie.getRelease());
+
     }
 
     @Override

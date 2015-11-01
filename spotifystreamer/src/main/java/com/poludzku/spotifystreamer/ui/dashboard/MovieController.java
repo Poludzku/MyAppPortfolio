@@ -1,8 +1,6 @@
 package com.poludzku.spotifystreamer.ui.dashboard;
 
-import com.poludzku.spotifystreamer.io.model.Movie;
-
-import java.util.List;
+import com.poludzku.spotifystreamer.io.model.MovieResponse;
 
 /**
  * Created by greed on 25/10/15.
@@ -10,5 +8,5 @@ import java.util.List;
 public interface MovieController {
     void downloadMovies();
 
-    void onMoviesDownloaded(List<Movie> movies);
+    void onMoviesDownloaded(MovieResponse movieResponse);
 }

@@ -1,6 +1,7 @@
 package com.poludzku.spotifystreamer.ui.dashboard;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,9 +14,7 @@ import android.view.ViewGroup;
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.io.model.MovieResponse;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.poludzku.spotifystreamer.ui.movie.MovieFragment;
 
 import rx.Observable;
 import rx.Subscription;
@@ -25,31 +24,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by greed on 19/09/15.
  */
-public class DashboardFragment extends Fragment implements MovieController {
+public class DashboardFragment extends Fragment implements MovieController, MovieViewHolder.OnClick {
 
     public static final String TAG = "DashboardFragment";
-    private static final List<Movie> DUMMY_LIST = new ArrayList<>();
 
-    static {
-        DUMMY_LIST.add(new Movie(1, "A1", "B1"));
-        DUMMY_LIST.add(new Movie(2, "A2", "B2"));
-        DUMMY_LIST.add(new Movie(3, "A3", "B3"));
-        DUMMY_LIST.add(new Movie(4, "A4", "B4"));
-        DUMMY_LIST.add(new Movie(5, "A5", "B5"));
-        DUMMY_LIST.add(new Movie(6, "A6", "B6"));
-        DUMMY_LIST.add(new Movie(7, "A7", "B7"));
-        DUMMY_LIST.add(new Movie(8, "A8", "B8"));
-        DUMMY_LIST.add(new Movie(9, "A9", "B9"));
-        DUMMY_LIST.add(new Movie(10, "A10", "B10"));
-        DUMMY_LIST.add(new Movie(11, "A11", "B11"));
-        DUMMY_LIST.add(new Movie(12, "A12", "B12"));
-        DUMMY_LIST.add(new Movie(13, "A13", "B13"));
-        DUMMY_LIST.add(new Movie(14, "A14", "B14"));
-        DUMMY_LIST.add(new Movie(15, "A15", "B15"));
-    }
+    private final MovieAdapter adapter = new MovieAdapter(this);
 
-    RetrofitHelper retrofitHelper;
-    Subscription subscription;
+    private RetrofitHelper retrofitHelper;
+    private Subscription subscription;
     private RecyclerView mRecyclerView;
 
     public static DashboardFragment getInstance() {
@@ -68,7 +50,7 @@ public class DashboardFragment extends Fragment implements MovieController {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        mRecyclerView.setOnClickListener(v -> v.setEnabled(false));
+        mRecyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -84,16 +66,27 @@ public class DashboardFragment extends Fragment implements MovieController {
     @Override
     public void downloadMovies() {
         Observable<MovieResponse> observable = retrofitHelper.downloadMovies();
-        subscription = observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(
-                movieResponse -> {
-                    mRecyclerView.setAdapter(new MovieAdapter(movieResponse.getResults()));
-                },
-                throwable -> Log.e("spotifystreamer", "networksucks " + throwable.getLocalizedMessage())
-        );
+        subscription = observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        this::onMoviesDownloaded,
+                        throwable -> Log.e("spotifystreamer", "networksucks " + throwable.getLocalizedMessage())
+                );
     }
 
     @Override
-    public void onMoviesDownloaded(List<Movie> movies) {
+    public void onMoviesDownloaded(MovieResponse movieResponse) {
+        adapter.setMovies(movieResponse.getResults());
+    }
 
+    @Override
+    public void onClick(View caller, int id) {
+        Log.d("S", "item:" + adapter.getMovie(id) + " id" + id);
+        Movie movie = adapter.getMovie(id);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.add(R.id.dashboard, MovieFragment.getInstance(movie), MovieFragment.TAG);
+        ft.addToBackStack(MovieFragment.TAG);
+        ft.commit();
     }
 }

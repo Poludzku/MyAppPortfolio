@@ -8,12 +8,9 @@ import android.view.MenuItem;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.ui.dashboard.DashboardFragment;
-import com.poludzku.spotifystreamer.ui.dashboard.RetrofitHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    RetrofitHelper retrofitHelper;
 
 
     @Override
@@ -22,21 +19,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
+        ft.addToBackStack(DashboardFragment.TAG);
         ft.commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -46,4 +41,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 1) {
+            super.onBackPressed();
+        } else {
+            getFragmentManager().popBackStack();
+        }
+    }
 }
