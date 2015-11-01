@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
+        ft.replace(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
         ft.commit();
     }
 

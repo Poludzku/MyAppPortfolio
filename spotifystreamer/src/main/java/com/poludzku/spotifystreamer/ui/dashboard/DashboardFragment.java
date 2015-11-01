@@ -67,6 +67,15 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
         downloadMovies();
     }
 
+
+    @Override
+    public void onDestroy() {
+        subscription.unsubscribe();
+        retrofitHelper = null;
+        subscription = null;
+        super.onDestroy();
+    }
+
     private void inject() {
         retrofitHelper = new RetrofitHelper(new MovieApiFactory().getMovieApi());
     }

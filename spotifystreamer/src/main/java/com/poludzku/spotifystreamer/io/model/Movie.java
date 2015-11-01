@@ -3,11 +3,12 @@ package com.poludzku.spotifystreamer.io.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by greed on 19/09/15.
  */
 public class Movie implements Parcelable {
-
 
     public static final Parcelable.Creator<Movie> CREATOR
             = new Parcelable.Creator<Movie>() {
@@ -21,18 +22,37 @@ public class Movie implements Parcelable {
     };
     private long id;
     private String title;
+    @SerializedName("release_date")
     private String release;
-
-    public Movie(long id, String title, String release) {
-        this.id = id;
-        this.title = title;
-        this.release = release;
-    }
+    @SerializedName("poster_path")
+    private String moviePoster;
+    @SerializedName("vote_average")
+    private float voteAverage;
+    @SerializedName("overview")
+    private String plotSynopsis;
+    @SerializedName("backdrop_path")
+    private String backdropImage;
 
     private Movie(Parcel in) {
         id = in.readLong();
         title = in.readString();
         release = in.readString();
+        moviePoster = in.readString();
+        voteAverage = in.readFloat();
+        plotSynopsis = in.readString();
+        backdropImage = in.readString();
+    }
+
+    public String getMoviePoster() {
+        return moviePoster;
+    }
+
+    public float getVoteAverage() {
+        return voteAverage;
+    }
+
+    public String getPlotSynopsis() {
+        return plotSynopsis;
     }
 
     public long getId() {
@@ -48,6 +68,10 @@ public class Movie implements Parcelable {
         return release;
     }
 
+    public String getBackdropImage() {
+        return backdropImage;
+    }
+
     public int describeContents() {
         return 0;
     }
@@ -56,5 +80,10 @@ public class Movie implements Parcelable {
         out.writeLong(id);
         out.writeString(title);
         out.writeString(release);
+        out.writeString(moviePoster);
+        out.writeFloat(voteAverage);
+        out.writeString(plotSynopsis);
+        out.writeString(backdropImage);
     }
+
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
+import com.poludzku.spotifystreamer.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ import java.util.List;
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
+    private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
     private final List<Movie> movies = new ArrayList<>();
-
     private final MovieViewHolder.OnClick listener;
 
     public MovieAdapter(MovieViewHolder.OnClick listener) {
@@ -43,9 +44,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        holder.title.setText(movie.getTitle());
-        holder.release.setText(movie.getRelease());
+        SpotifystreamerApplication
+                .getInstance()
+                .getPicasso()
+                .load(getPosterPath(movie.getMoviePoster()))
+                .into(holder.imageView);
 
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(MovieViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        SpotifystreamerApplication.getInstance().getPicasso().cancelRequest(holder.imageView);
+        holder.imageView.setImageDrawable(null);
+    }
+
+    private String getPosterPath(String image) {
+        return IMAGE_PATH + image;
     }
 
     @Override
