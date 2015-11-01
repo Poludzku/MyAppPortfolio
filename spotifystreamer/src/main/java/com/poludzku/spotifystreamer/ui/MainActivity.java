@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(R.id.dashboard, DashboardFragment.getInstance(), DashboardFragment.TAG);
-        ft.addToBackStack(DashboardFragment.TAG);
         ft.commit();
     }
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 1) {
+        if (getFragmentManager().getBackStackEntryCount() == 0 || getResources().getBoolean(R.bool.isTablet)) {
             super.onBackPressed();
         } else {
             getFragmentManager().popBackStack();

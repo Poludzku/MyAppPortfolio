@@ -78,14 +78,21 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
     @Override
     public void onMoviesDownloaded(MovieResponse movieResponse) {
         adapter.setMovies(movieResponse.getResults());
+        if (movieResponse.getResults().size() > 0 && getResources().getBoolean(R.bool.isTablet)) {
+            onClick(null, 0);
+        }
     }
 
     @Override
     public void onClick(View caller, int id) {
         Log.d("S", "item:" + adapter.getMovie(id) + " id" + id);
         Movie movie = adapter.getMovie(id);
+        Fragment topFragment = getFragmentManager().findFragmentByTag(MovieFragment.TAG);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.add(R.id.dashboard, MovieFragment.getInstance(movie), MovieFragment.TAG);
+        if (topFragment != null) {
+            getFragmentManager().popBackStackImmediate();
+        }
+        ft.replace(R.id.details, MovieFragment.getInstance(movie), MovieFragment.TAG);
         ft.addToBackStack(MovieFragment.TAG);
         ft.commit();
     }
