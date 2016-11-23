@@ -8,12 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
-
+<ScrollView
+    android:background="@color/semiTransparentBackdrop"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/layout_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/semiTransparentBackdrop"
         android:clickable="true"
         android:orientation="vertical">
 
@@ -44,4 +46,6 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+</ScrollView>
+
 </RelativeLayout>
