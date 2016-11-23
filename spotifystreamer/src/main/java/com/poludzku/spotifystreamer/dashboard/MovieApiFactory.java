@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.dashboard;
+package com.poludzku.spotifystreamer.dashboard;
 
 
 import okhttp3.OkHttpClient;

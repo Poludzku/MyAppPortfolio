@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.dashboard;
+package com.poludzku.spotifystreamer.dashboard;
 
 import com.poludzku.spotifystreamer.io.model.MovieResponse;
 

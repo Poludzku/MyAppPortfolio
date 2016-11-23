@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.dashboard;
+package com.poludzku.spotifystreamer.dashboard;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.io.model.MovieResponse;
-import com.poludzku.spotifystreamer.ui.movie.view.MovieFragment;
+import com.poludzku.spotifystreamer.movie.view.MovieFragment;
 
 import rx.Observable;
 import rx.Subscription;

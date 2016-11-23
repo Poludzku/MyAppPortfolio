@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.movie.view;
+package com.poludzku.spotifystreamer.movie.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,8 +11,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.SpotifystreamerApplication;
+import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.movie.injection.MovieModule;
+import com.squareup.picasso.Picasso;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,9 @@ public class MovieFragment extends Fragment {
     @BindView(R.id.movie_details_backdrop_image)
     ImageView movieDetailsBackdropImage;
 
+    @Inject
+    Picasso picasso;
+
     public static MovieFragment getInstance(Movie movie) {
         MovieFragment fragment = new MovieFragment();
         Bundle arguments = new Bundle();
@@ -60,16 +67,15 @@ public class MovieFragment extends Fragment {
         Movie movie = getArguments().getParcelable(MOVIE_EXTRA);
 
         ButterKnife.bind(this, view);
-        SpotifystreamerApplication.getInstance().getPicasso()
-                .load(getPosterPath(movie.getMoviePoster())).into(movieDetailsPoster);
+        SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule()).inject(this);
+        picasso.load(getPosterPath(movie.getMoviePoster())).into(movieDetailsPoster);
 
         movieDetailsTitle.setText(movie.getTitle());
         movieDetailsRelease.setText(movie.getRelease());
         movieDetailsRatingBar.setRating(movie.getVoteAverage() / 2);
         movieDetailsSynopsis.setText(movie.getPlotSynopsis());
 
-        SpotifystreamerApplication.getInstance().getPicasso()
-                .load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
+        picasso.load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
 
     }
 

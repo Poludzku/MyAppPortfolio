@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.dashboard;
+package com.poludzku.spotifystreamer.dashboard;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.SpotifystreamerApplication;
+import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
 
 import java.util.ArrayList;
@@ -44,18 +44,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        SpotifystreamerApplication
-                .getInstance()
-                .getPicasso()
-                .load(getPosterPath(movie.getMoviePoster()))
-                .into(holder.imageView);
+        //TODO
+        //SpotifystreamerApplication.getInstance()
+          //      .getPicasso()
+            //    .load(getPosterPath(movie.getMoviePoster()))
+              //  .into(holder.imageView);
 
     }
 
     @Override
     public void onViewDetachedFromWindow(MovieViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        SpotifystreamerApplication.getInstance().getPicasso().cancelRequest(holder.imageView);
+        //TODO
+        //SpotifystreamerApplication.getInstance().getPicasso().cancelRequest(holder.imageView);
         holder.imageView.setImageDrawable(null);
     }
 

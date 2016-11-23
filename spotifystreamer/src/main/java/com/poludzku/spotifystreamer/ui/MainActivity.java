@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.ui.dashboard.DashboardFragment;
+import com.poludzku.spotifystreamer.dashboard.DashboardFragment;
 
 public class MainActivity extends AppCompatActivity {
 
