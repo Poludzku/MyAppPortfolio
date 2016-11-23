@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui.movie;
+package com.poludzku.spotifystreamer.ui.movie.view;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by greed on 01/11/15.
  */
@@ -25,6 +28,18 @@ public class MovieFragment extends Fragment {
 
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
 
+    @BindView(R.id.movie_details_poster)
+    ImageView movieDetailsPoster;
+    @BindView(R.id.movie_details_title)
+    TextView movieDetailsTitle;
+    @BindView(R.id.movie_details_release)
+    TextView movieDetailsRelease;
+    @BindView(R.id.movie_details_rating_bar)
+    RatingBar movieDetailsRatingBar;
+    @BindView(R.id.movie_details_synopsis)
+    TextView movieDetailsSynopsis;
+    @BindView(R.id.movie_details_backdrop_image)
+    ImageView movieDetailsBackdropImage;
 
     public static MovieFragment getInstance(Movie movie) {
         MovieFragment fragment = new MovieFragment();
@@ -44,16 +59,17 @@ public class MovieFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Movie movie = getArguments().getParcelable(MOVIE_EXTRA);
 
+        ButterKnife.bind(this, view);
         SpotifystreamerApplication.getInstance().getPicasso()
-                .load(getPosterPath(movie.getMoviePoster())).into((ImageView) view.findViewById(R.id.movie_details_poster));
+                .load(getPosterPath(movie.getMoviePoster())).into(movieDetailsPoster);
 
-        ((TextView) view.findViewById(R.id.movie_details_title)).setText(movie.getTitle());
-        ((TextView) view.findViewById(R.id.movie_details_release)).setText(movie.getRelease());
-        ((RatingBar) view.findViewById(R.id.movie_details_rating_bar)).setRating(movie.getVoteAverage() / 2);
-        ((TextView) view.findViewById(R.id.movie_details_synopsis)).setText(movie.getPlotSynopsis());
+        movieDetailsTitle.setText(movie.getTitle());
+        movieDetailsRelease.setText(movie.getRelease());
+        movieDetailsRatingBar.setRating(movie.getVoteAverage() / 2);
+        movieDetailsSynopsis.setText(movie.getPlotSynopsis());
 
         SpotifystreamerApplication.getInstance().getPicasso()
-                .load(getPosterPath(movie.getBackdropImage())).into((ImageView) view.findViewById(R.id.move_details_backdrop_image));
+                .load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
 
     }
 

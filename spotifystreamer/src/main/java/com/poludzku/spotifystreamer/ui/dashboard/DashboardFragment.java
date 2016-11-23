@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.io.model.MovieResponse;
-import com.poludzku.spotifystreamer.ui.movie.MovieFragment;
+import com.poludzku.spotifystreamer.ui.movie.view.MovieFragment;
 
 import rx.Observable;
 import rx.Subscription;
