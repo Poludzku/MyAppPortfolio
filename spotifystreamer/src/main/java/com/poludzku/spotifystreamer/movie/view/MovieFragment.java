@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.movie.injection.MovieModule;
+import com.poludzku.spotifystreamer.movie.presenter.MoviePresenter;
+import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -24,7 +27,7 @@ import butterknife.ButterKnife;
 /**
  * Created by greed on 01/11/15.
  */
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements MovieView {
 
     public static final String TAG = "MovieFragment";
 
@@ -47,6 +50,8 @@ public class MovieFragment extends Fragment {
 
     @Inject
     Picasso picasso;
+    @Inject
+    MoviePresenter moviePresenter;
 
     public static MovieFragment getInstance(Movie movie) {
         MovieFragment fragment = new MovieFragment();
@@ -67,7 +72,7 @@ public class MovieFragment extends Fragment {
         Movie movie = getArguments().getParcelable(MOVIE_EXTRA);
 
         ButterKnife.bind(this, view);
-        SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule()).inject(this);
+        SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule(this)).inject(this);
         picasso.load(getPosterPath(movie.getMoviePoster())).into(movieDetailsPoster);
 
         movieDetailsTitle.setText(movie.getTitle());
@@ -76,7 +81,18 @@ public class MovieFragment extends Fragment {
         movieDetailsSynopsis.setText(movie.getPlotSynopsis());
 
         picasso.load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
+        moviePresenter.loadComments(movie.getId());
+    }
 
+    @Override
+    public void onShowError(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addUserReviews(UserReviewResponse userReviewResponse) {
+
+        Toast.makeText(getActivity(), userReviewResponse.getResults().get(0).getAuthor(), Toast.LENGTH_SHORT).show();
     }
 
     private String getPosterPath(String image) {
