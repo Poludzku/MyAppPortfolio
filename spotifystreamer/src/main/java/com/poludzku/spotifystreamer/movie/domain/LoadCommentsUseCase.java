@@ -47,6 +47,18 @@ public class LoadCommentsUseCase {
         reviews.add(userReview1);
         reviews.add(userReview2);
         reviews.add(userReview3);
+        reviews.add(userReview1);
+        reviews.add(userReview2);
+        reviews.add(userReview3);
+        reviews.add(userReview1);
+        reviews.add(userReview2);
+        reviews.add(userReview3);
+        reviews.add(userReview4);
+        reviews.add(userReview4);
+        reviews.add(userReview4);
+        reviews.add(userReview1);
+        reviews.add(userReview2);
+        reviews.add(userReview3);
         reviews.add(userReview4);
         UserReviewResponse userReviewResponse = new UserReviewResponse(movieId, 1, 1, 4, reviews );
 
