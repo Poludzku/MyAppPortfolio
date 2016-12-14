@@ -9,6 +9,7 @@ import com.poludzku.spotifystreamer.movie.presenter.MoviePresenterImpl;
 import com.poludzku.spotifystreamer.movie.view.MovieDetailsAdapter;
 import com.poludzku.spotifystreamer.movie.view.MovieDetailsAdapterImpl;
 import com.poludzku.spotifystreamer.movie.view.MovieView;
+import com.squareup.picasso.Picasso;
 
 import dagger.Module;
 import dagger.Provides;
@@ -44,7 +45,7 @@ public class MovieModule {
         return new LinearLayoutManager(null, LinearLayoutManager.VERTICAL, false);
     }
     @Provides
-    MovieDetailsAdapter adapter(){
-        return new MovieDetailsAdapterImpl();
+    MovieDetailsAdapter adapter(Picasso picasso){
+        return new MovieDetailsAdapterImpl(picasso);
     }
 }

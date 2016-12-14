@@ -36,16 +36,6 @@ public class MovieFragment extends Fragment implements MovieView {
 
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
 
-    /* @BindView(R.id.movie_details_poster)
-     ImageView movieDetailsPoster;
-     @BindView(R.id.movie_details_title)
-     TextView movieDetailsTitle;
-     @BindView(R.id.movie_details_release)
-     TextView movieDetailsRelease;
-     @BindView(R.id.movie_details_rating_bar)
-     RatingBar movieDetailsRatingBar;
-     @BindView(R.id.movie_details_synopsis)
-     TextView movieDetailsSynopsis;*/
     @BindView(R.id.movie_details_backdrop_image)
     ImageView movieDetailsBackdropImage;
     @BindView(R.id.details_recycle_view)
@@ -59,6 +49,8 @@ public class MovieFragment extends Fragment implements MovieView {
     RecyclerView.LayoutManager layoutManager;
     @Inject
     MovieDetailsAdapter adapter;
+
+    Movie movie;
 
 
     public static MovieFragment getInstance(Movie movie) {
@@ -77,17 +69,11 @@ public class MovieFragment extends Fragment implements MovieView {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Movie movie = getArguments().getParcelable(MOVIE_EXTRA);
+        movie = getArguments().getParcelable(MOVIE_EXTRA);
 
         ButterKnife.bind(this, view);
         SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule(this)).inject(this);
         picasso.load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
-        /*movieDetailsTitle.setText(movie.getTitle());
-        movieDetailsRelease.setText(movie.getRelease());
-        movieDetailsRatingBar.setRating(movie.getVoteAverage() / 2);
-        movieDetailsSynopsis.setText(movie.getPlotSynopsis());
-
-        picasso.load(getPosterPath(movie.getMoviePoster())).into(movieDetailsPoster);*/
         detailsRecycleView.setLayoutManager(layoutManager);
         detailsRecycleView.setAdapter(adapter);
         moviePresenter.loadComments(movie.getId());
@@ -100,7 +86,7 @@ public class MovieFragment extends Fragment implements MovieView {
 
     @Override
     public void addUserReviews(UserReviewResponse userReviewResponse) {
-        adapter.setDetails(userReviewResponse);
+        adapter.setDetails(userReviewResponse,movie);
     }
 
     private String getPosterPath(String image) {

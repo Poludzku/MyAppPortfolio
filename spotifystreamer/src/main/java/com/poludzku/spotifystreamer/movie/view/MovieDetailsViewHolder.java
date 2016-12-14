@@ -1,9 +1,9 @@
 package com.poludzku.spotifystreamer.movie.view;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 
@@ -11,18 +11,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Jacek on 13/12/2016.
+ * Created by Jacek on 14/12/2016.
  */
 
-class MovieDetailsViewHolder extends RecyclerView.ViewHolder {
+public class MovieDetailsViewHolder extends AbstractMovieViewHolder {
 
-    @BindView(R.id.review_author)
-    TextView author;
-    @BindView(R.id.review_content)
-    TextView content;
+    @BindView(R.id.movie_details_poster)
+    ImageView  movieDetailsPoster;
+    @BindView(R.id.movie_details_rating_bar)
+    RatingBar movieDetailsRatingBar;
+    @BindView(R.id.movie_details_title)
+    TextView movieDetailsTitle;
+    @BindView(R.id.movie_details_release)
+    TextView movieDetailsRelease;
+    @BindView(R.id.movie_details_synopsis)
+    TextView movieDetailsSynopsis;
+
 
     public MovieDetailsViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this, itemView);
+        ButterKnife.bind(this,itemView);
     }
 }
