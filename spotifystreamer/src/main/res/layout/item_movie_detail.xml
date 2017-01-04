@@ -2,10 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/m"
+    android:layout_marginTop="@dimen/xxxs"
+    android:layout_marginLeft="@dimen/s"
+    android:layout_marginRight="@dimen/s"
+    android:elevation="@dimen/s">
 
     <ImageView
         android:id="@+id/movie_details_poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <CheckBox
+        android:text="@string/mark_as_favourite"
+        android:id="@+id/favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
