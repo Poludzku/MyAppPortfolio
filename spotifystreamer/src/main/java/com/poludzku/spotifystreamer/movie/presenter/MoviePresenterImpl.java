@@ -1,5 +1,6 @@
 package com.poludzku.spotifystreamer.movie.presenter;
 
+import com.poludzku.spotifystreamer.movie.domain.ChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.movie.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.movie.domain.LoadCommentsUseCaseCallback;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
@@ -14,13 +15,15 @@ import javax.inject.Inject;
 public class MoviePresenterImpl implements MoviePresenter, LoadCommentsUseCaseCallback {
 
     LoadCommentsUseCase loadCommentsUseCase;
+    ChangeFavouriteUseCase changeFavouriteUseCase;
     MovieView view;
 
     @Inject
-    public MoviePresenterImpl(LoadCommentsUseCase loadCommentsUseCase, MovieView view) {
+    public MoviePresenterImpl(LoadCommentsUseCase loadCommentsUseCase, MovieView view, ChangeFavouriteUseCase changeFavouriteUseCase) {
         this.loadCommentsUseCase = loadCommentsUseCase;
         this.loadCommentsUseCase.setCallback(this);
         this.view = view;
+        this.changeFavouriteUseCase = changeFavouriteUseCase;
     }
 
     @Override
@@ -36,5 +39,10 @@ public class MoviePresenterImpl implements MoviePresenter, LoadCommentsUseCaseCa
     @Override
     public void onUserReviewResponse(UserReviewResponse userReviewResponse) {
         view.addUserReviews(userReviewResponse);
+    }
+
+    @Override
+    public void changeFavourite(long id, boolean favourite) {
+        changeFavouriteUseCase.setMovieFavourite(id,favourite);
     }
 }

@@ -1,6 +1,7 @@
 package com.poludzku.spotifystreamer.movie.view;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ public class MovieDetailsViewHolder extends AbstractMovieViewHolder {
     TextView movieDetailsRelease;
     @BindView(R.id.movie_details_synopsis)
     TextView movieDetailsSynopsis;
+    @BindView(R.id.favourite)
+    CheckBox favouriteCheckbox;
 
 
     public MovieDetailsViewHolder(View itemView) {

@@ -2,6 +2,7 @@ package com.poludzku.spotifystreamer.movie.view;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.io.model.Movie;
@@ -23,11 +24,13 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     public static final int HEADER = 1;
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
     Picasso picasso;
+    MovieView movieView;
     List<Wrapper> reviews = new ArrayList<>();
 
     @Inject
-    public MovieDetailsAdapterImpl(Picasso picasso) {
+    public MovieDetailsAdapterImpl(Picasso picasso, MovieView movieView) {
         this.picasso = picasso;
+        this.movieView = movieView;
     }
 
     @Override
@@ -74,6 +77,11 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
                 detailsHolder.movieDetailsRelease.setText(movie.getRelease());
                 detailsHolder.movieDetailsRatingBar.setRating(movie.getVoteAverage() / 2);
                 detailsHolder.movieDetailsSynopsis.setText(movie.getPlotSynopsis());
+                detailsHolder.favouriteCheckbox.setChecked(movie.isFavourite());
+                detailsHolder.favouriteCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    checkedChanged(isChecked);
+                    movie.setFavourite(isChecked);
+                });
 
                 picasso.load(getPosterPath(movie.getMoviePoster())).into(detailsHolder.movieDetailsPoster);
         }
@@ -104,5 +112,9 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
         public Wrapper(UserReview userReview) {
             this.userReview = userReview;
         }
+    }
+
+    private void checkedChanged(boolean favourite) {
+        movieView.onFavouriteChanged(favourite);
     }
 }

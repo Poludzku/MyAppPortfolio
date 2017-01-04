@@ -92,4 +92,9 @@ public class MovieFragment extends Fragment implements MovieView {
     private String getPosterPath(String image) {
         return IMAGE_PATH + image;
     }
+
+    @Override
+    public void onFavouriteChanged(boolean favourite) {
+        moviePresenter.changeFavourite(movie.getId(),favourite);
+    }
 }

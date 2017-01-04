@@ -5,9 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by greed on 19/09/15.
- */
 public class Movie implements Parcelable {
 
     public static final Parcelable.Creator<Movie> CREATOR
@@ -33,6 +30,8 @@ public class Movie implements Parcelable {
     @SerializedName("backdrop_path")
     private String backdropImage;
 
+    private boolean favourite;
+
     private Movie(Parcel in) {
         id = in.readLong();
         title = in.readString();
@@ -41,6 +40,7 @@ public class Movie implements Parcelable {
         voteAverage = in.readFloat();
         plotSynopsis = in.readString();
         backdropImage = in.readString();
+        favourite = in.readInt() == 1;
     }
 
     public String getMoviePoster() {
@@ -76,6 +76,14 @@ public class Movie implements Parcelable {
         return 0;
     }
 
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
     public void writeToParcel(Parcel out, int flags) {
         out.writeLong(id);
         out.writeString(title);
@@ -84,6 +92,7 @@ public class Movie implements Parcelable {
         out.writeFloat(voteAverage);
         out.writeString(plotSynopsis);
         out.writeString(backdropImage);
+        out.writeInt((favourite ? 1 : 0));
     }
 
 }

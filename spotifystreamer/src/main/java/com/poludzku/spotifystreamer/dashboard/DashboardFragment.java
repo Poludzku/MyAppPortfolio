@@ -2,6 +2,8 @@ package com.poludzku.spotifystreamer.dashboard;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,18 +16,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
+import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.io.model.Movie;
 import com.poludzku.spotifystreamer.io.model.MovieResponse;
 import com.poludzku.spotifystreamer.movie.view.MovieFragment;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by greed on 19/09/15.
- */
 public class DashboardFragment extends Fragment implements MovieController, MovieViewHolder.OnClick {
 
     public static final String TAG = "DashboardFragment";
@@ -44,6 +47,10 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
 
     private int sortOrder = SORT_BY_POPULARITY;
 
+    public static final String FAVOURITES = "FAVOURITES";
+
+    private SharedPreferences sharedPreferences;
+
     public static DashboardFragment getInstance() {
         return new DashboardFragment();
     }
@@ -53,6 +60,7 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
         super.onCreate(savedInstanceState);
         inject();
         setHasOptionsMenu(true);
+        sharedPreferences = SpotifystreamerApplication.getInstance().getSharedPreferences();
     }
 
     @Nullable
@@ -118,6 +126,7 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
         subscription = observable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .map(this::mapFavourites)
                 .subscribe(
                         this::onMoviesDownloaded,
                         throwable -> {
@@ -126,6 +135,23 @@ public class DashboardFragment extends Fragment implements MovieController, Movi
                         }
                 );
     }
+
+    private MovieResponse mapFavourites(MovieResponse origin) {
+
+        Set<String> favourites = sharedPreferences.getStringSet(FAVOURITES,new HashSet<>());
+        if(favourites.size() == 0) return origin;
+
+        for(Movie movie : origin.getResults()) {
+            for(String favouriteId : favourites) {
+                if(Integer.valueOf(favouriteId).longValue() == movie.getId()) {
+                    movie.setFavourite(true);
+                    break;
+                }
+            }
+        }
+        return origin;
+    }
+
 
     @Override
     public void onMoviesDownloaded(MovieResponse movieResponse) {

@@ -10,4 +10,6 @@ public interface MovieView {
     void onShowError(String message);
 
     void addUserReviews(UserReviewResponse userReviewResponse);
+
+    void onFavouriteChanged(boolean favourite);
 }

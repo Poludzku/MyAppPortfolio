@@ -1,8 +1,10 @@
 package com.poludzku.spotifystreamer.movie.injection;
 
+import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.poludzku.spotifystreamer.movie.domain.ChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.movie.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.movie.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.movie.presenter.MoviePresenterImpl;
@@ -13,10 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import dagger.Module;
 import dagger.Provides;
-
-/**
- * Created by Jacek on 23/11/2016.
- */
 
 @Module
 public class MovieModule {
@@ -37,6 +35,11 @@ public class MovieModule {
     }
 
     @Provides
+    ChangeFavouriteUseCase changeFavouriteUseCase(SharedPreferences sharedPreferences) {
+        return new ChangeFavouriteUseCase(sharedPreferences);
+    }
+
+    @Provides
     MovieView view() {
         return view;
     }
@@ -46,6 +49,6 @@ public class MovieModule {
     }
     @Provides
     MovieDetailsAdapter adapter(Picasso picasso){
-        return new MovieDetailsAdapterImpl(picasso);
+        return new MovieDetailsAdapterImpl(picasso,view);
     }
 }
