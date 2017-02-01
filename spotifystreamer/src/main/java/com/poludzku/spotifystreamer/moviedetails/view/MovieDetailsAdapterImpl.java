@@ -33,10 +33,10 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     }
 
     @Override
-    void setDetails(UserReviewResponse userReviewResponse,Movie movie) {
+    void setDetails(UserReviewResponse userReviewResponse, Movie movie) {
         reviews.clear();
         reviews.add(new Wrapper(movie));
-        for (UserReview userReview: userReviewResponse.getResults()){
+        for (UserReview userReview : userReviewResponse.getResults()) {
             reviews.add(new Wrapper(userReview));
         }
         notifyDataSetChanged();
@@ -100,7 +100,11 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
         return IMAGE_PATH + image;
     }
 
-    static class Wrapper{
+    private void checkedChanged(boolean favourite) {
+        movieView.onFavouriteChanged(favourite);
+    }
+
+    static class Wrapper {
         Movie movie;
         UserReview userReview;
 
@@ -111,9 +115,5 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
         public Wrapper(UserReview userReview) {
             this.userReview = userReview;
         }
-    }
-
-    private void checkedChanged(boolean favourite) {
-        movieView.onFavouriteChanged(favourite);
     }
 }

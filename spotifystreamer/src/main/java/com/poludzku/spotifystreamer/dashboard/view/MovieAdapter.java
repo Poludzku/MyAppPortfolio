@@ -40,14 +40,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     public Movie getMovie(int id) {
         return movies.get(id);
     }
+
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
         //TODO
         //SpotifystreamerApplication.getInstance()
-          //      .getPicasso()
-            //    .load(getPosterPath(movie.getMoviePoster()))
-              //  .into(holder.imageView);
+        //      .getPicasso()
+        //    .load(getPosterPath(movie.getMoviePoster()))
+        //  .into(holder.imageView);
 
     }
 

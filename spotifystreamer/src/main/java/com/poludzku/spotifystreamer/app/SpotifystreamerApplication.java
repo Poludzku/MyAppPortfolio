@@ -15,11 +15,9 @@ import javax.inject.Inject;
 public class SpotifystreamerApplication extends Application {
 
     private static SpotifystreamerApplication instance;
-
-    private SpotifystreamerComponent component;
-
     @Inject
     SharedPreferences sharedPreferences;
+    private SpotifystreamerComponent component;
 
     public static SpotifystreamerApplication getInstance() {
         return instance;

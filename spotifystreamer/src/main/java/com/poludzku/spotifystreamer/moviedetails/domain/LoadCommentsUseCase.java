@@ -4,7 +4,6 @@ package com.poludzku.spotifystreamer.moviedetails.domain;
 import com.poludzku.spotifystreamer.moviedetails.repository.ReviewRepository;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 
-
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -41,7 +40,7 @@ public class LoadCommentsUseCase {
         callback.onUserReviewResponse(userReviewResponse);
     }
 
-    private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId){
+    private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId) {
         return reviewRepository.loadComments(movieId);
     }
     /*private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId){

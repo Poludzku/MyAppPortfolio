@@ -44,12 +44,14 @@ public class MovieModule {
     MovieView view() {
         return view;
     }
+
     @Provides
-    RecyclerView.LayoutManager linearLayoutManager(){
+    RecyclerView.LayoutManager linearLayoutManager() {
         return new LinearLayoutManager(null, LinearLayoutManager.VERTICAL, false);
     }
+
     @Provides
-    MovieDetailsAdapter adapter(Picasso picasso){
-        return new MovieDetailsAdapterImpl(picasso,view);
+    MovieDetailsAdapter adapter(Picasso picasso) {
+        return new MovieDetailsAdapterImpl(picasso, view);
     }
 }

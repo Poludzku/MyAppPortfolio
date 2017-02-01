@@ -20,14 +20,14 @@ public class ChangeFavouriteUseCase {
 
     public void setMovieFavourite(long id, boolean favourite) {
         String idString = Long.toString(id);
-        Set<String> current = sharedPreferences.getStringSet(FAVOURITES,new HashSet<>());
-        if(favourite && !current.contains(idString)) {
+        Set<String> current = sharedPreferences.getStringSet(FAVOURITES, new HashSet<>());
+        if (favourite && !current.contains(idString)) {
             current.add(idString);
-        } else if( !favourite && current.contains(idString)) {
+        } else if (!favourite && current.contains(idString)) {
             current.remove(idString);
         }
-        sharedPreferences.edit().putStringSet(FAVOURITES,null).commit();
-        sharedPreferences.edit().putStringSet(FAVOURITES,current).commit();
+        sharedPreferences.edit().putStringSet(FAVOURITES, null).commit();
+        sharedPreferences.edit().putStringSet(FAVOURITES, current).commit();
 
     }
 }

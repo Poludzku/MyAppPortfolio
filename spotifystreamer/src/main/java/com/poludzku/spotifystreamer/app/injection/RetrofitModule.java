@@ -19,9 +19,10 @@ public class RetrofitModule {
 
     @PerApplication
     @Provides
-    RetrofitHelper retrofitHelper(MovieApi movieApi){
+    RetrofitHelper retrofitHelper(MovieApi movieApi) {
         return new RetrofitHelper(movieApi);
     }
+
     @PerApplication
     @Provides
     ReviewRepository reviewRepository(RetrofitHelper retrofitHelper) {
@@ -36,7 +37,7 @@ public class RetrofitModule {
 
     @PerApplication
     @Provides
-    MovieApi movieApi(){
+    MovieApi movieApi() {
         return new MovieApiFactory().getMovieApi();
     }
 }

@@ -84,7 +84,7 @@ public class MovieFragment extends Fragment implements MovieView {
 
     @Override
     public void addUserReviews(UserReviewResponse userReviewResponse) {
-        adapter.setDetails(userReviewResponse,movie);
+        adapter.setDetails(userReviewResponse, movie);
     }
 
     private String getPosterPath(String image) {
@@ -93,6 +93,6 @@ public class MovieFragment extends Fragment implements MovieView {
 
     @Override
     public void onFavouriteChanged(boolean favourite) {
-        moviePresenter.changeFavourite(movie.getId(),favourite);
+        moviePresenter.changeFavourite(movie.getId(), favourite);
     }
 }

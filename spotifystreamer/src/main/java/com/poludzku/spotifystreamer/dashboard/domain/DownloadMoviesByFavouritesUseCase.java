@@ -1,7 +1,5 @@
 package com.poludzku.spotifystreamer.dashboard.domain;
 
-import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenterImpl;
-
 import javax.inject.Inject;
 
 /**

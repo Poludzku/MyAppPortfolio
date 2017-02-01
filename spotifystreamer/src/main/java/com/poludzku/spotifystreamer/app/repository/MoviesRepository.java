@@ -10,5 +10,6 @@ import rx.Observable;
 
 public interface MoviesRepository {
     Observable<MovieResponse> downloadMoviesByPopularity();
+
     Observable<MovieResponse> downloadMoviesByRating();
 }

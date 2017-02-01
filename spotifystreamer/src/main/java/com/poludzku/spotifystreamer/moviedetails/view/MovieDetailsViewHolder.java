@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 public class MovieDetailsViewHolder extends AbstractMovieViewHolder {
 
     @BindView(R.id.movie_details_poster)
-    ImageView  movieDetailsPoster;
+    ImageView movieDetailsPoster;
     @BindView(R.id.movie_details_rating_bar)
     RatingBar movieDetailsRatingBar;
     @BindView(R.id.movie_details_title)
@@ -33,6 +33,6 @@ public class MovieDetailsViewHolder extends AbstractMovieViewHolder {
 
     public MovieDetailsViewHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 }

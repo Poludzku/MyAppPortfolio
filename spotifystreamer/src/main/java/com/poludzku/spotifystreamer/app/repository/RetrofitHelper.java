@@ -25,7 +25,8 @@ public class RetrofitHelper implements ReviewRepository, MoviesRepository {
     public Observable<MovieResponse> downloadMoviesByRating() {
         return mMovieApi.getMoviesByRating(BuildConfig.MOVIE_KEY);
     }
-    public Observable<UserReviewResponse> loadComments(long movieId){
+
+    public Observable<UserReviewResponse> loadComments(long movieId) {
         return mMovieApi.getUserReviews(movieId, BuildConfig.MOVIE_KEY);
     }
 

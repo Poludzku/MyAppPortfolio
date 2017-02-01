@@ -4,7 +4,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import javax.inject.Qualifier;
-import javax.inject.Scope;
 
 /**
  * Created by Jacek on 23/11/2016.

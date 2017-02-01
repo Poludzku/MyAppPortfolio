@@ -11,7 +11,6 @@ import com.poludzku.spotifystreamer.dashboard.domain.DownloadMoviesUseCase;
 import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenterImpl;
 import com.poludzku.spotifystreamer.dashboard.view.DashboardView;
-import com.poludzku.spotifystreamer.moviedetails.view.MovieView;
 
 import dagger.Module;
 import dagger.Provides;

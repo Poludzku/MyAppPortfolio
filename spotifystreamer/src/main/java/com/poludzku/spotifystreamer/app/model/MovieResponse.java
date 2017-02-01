@@ -1,7 +1,5 @@
 package com.poludzku.spotifystreamer.app.model;
 
-import com.poludzku.spotifystreamer.app.model.Movie;
-
 import java.util.List;
 
 /**

@@ -2,7 +2,6 @@ package com.poludzku.spotifystreamer.dashboard.view;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,45 +15,26 @@ import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
-import com.poludzku.spotifystreamer.app.repository.MovieApiFactory;
-import com.poludzku.spotifystreamer.app.repository.RetrofitHelper;
 import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.dashboard.injection.DashboardModule;
 import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.moviedetails.view.MovieFragment;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class DashboardFragment extends Fragment implements DashboardView, MovieViewHolder.OnClick {
 
     public static final String TAG = "DashboardFragment";
-
-
+    public static final String FAVOURITES = "FAVOURITES";
     private static final int SORT_BY_POPULARITY = 0;
     private static final int SORT_BY_RATING = 1;
-
     private static final String SORT_ORDER_EXTRA = "sort_order_extra";
-
-
     private final MovieAdapter adapter = new MovieAdapter(this);
-
-    private RecyclerView mRecyclerView;
-
-    private int sortOrder = SORT_BY_POPULARITY;
-
-    public static final String FAVOURITES = "FAVOURITES";
-
     @Inject
     MoviePresenter moviePresenter;
+    private RecyclerView mRecyclerView;
+    private int sortOrder = SORT_BY_POPULARITY;
 
     public static DashboardFragment getInstance() {
         return new DashboardFragment();

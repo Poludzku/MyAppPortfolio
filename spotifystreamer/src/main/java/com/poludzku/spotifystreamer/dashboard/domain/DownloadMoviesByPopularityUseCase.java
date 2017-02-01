@@ -58,8 +58,10 @@ public class DownloadMoviesByPopularityUseCase implements DownloadMoviesUseCase 
     }
 
     public void cleanup() {
-        subscription.unsubscribe();
-        subscription = null;
+        if (subscription != null) {
+            subscription.unsubscribe();
+            subscription = null;
+        }
         callback = null;
     }
 

@@ -1,7 +1,5 @@
 package com.poludzku.spotifystreamer.dashboard.presenter;
 
-import com.poludzku.spotifystreamer.app.model.MovieResponse;
-
 /**
  * Created by greed on 25/10/15.
  */

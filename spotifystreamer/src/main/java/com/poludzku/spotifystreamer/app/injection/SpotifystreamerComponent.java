@@ -18,5 +18,6 @@ public interface SpotifystreamerComponent {
     void inject(SpotifystreamerApplication application);
 
     DashboardComponent plus(DashboardModule module);
+
     MovieComponent plus(MovieModule module);
 }

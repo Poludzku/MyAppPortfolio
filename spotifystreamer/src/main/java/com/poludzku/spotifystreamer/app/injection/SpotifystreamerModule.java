@@ -21,12 +21,12 @@ public class SpotifystreamerModule {
 
     private SpotifystreamerApplication application;
 
-    public SpotifystreamerModule(SpotifystreamerApplication application){
+    public SpotifystreamerModule(SpotifystreamerApplication application) {
         this.application = application;
     }
 
     @Provides
-    Picasso providePicasso(){
+    Picasso providePicasso() {
         return Picasso.with(application);
     }
 
