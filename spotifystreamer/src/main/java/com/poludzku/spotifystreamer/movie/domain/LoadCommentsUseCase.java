@@ -1,12 +1,15 @@
 package com.poludzku.spotifystreamer.movie.domain;
 
 
+import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
 import com.poludzku.spotifystreamer.movie.repository.UserReview;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
 
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -18,6 +21,12 @@ import rx.schedulers.Schedulers;
 
 public class LoadCommentsUseCase {
     private LoadCommentsUseCaseCallback callback;
+    private ReviewRepository reviewRepository;
+
+
+    public LoadCommentsUseCase(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
 
     public void setCallback(LoadCommentsUseCaseCallback callback) {
         this.callback = callback;
@@ -39,6 +48,9 @@ public class LoadCommentsUseCase {
     }
 
     private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId){
+        return reviewRepository.loadComments(movieId);
+    }
+    /*private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId){
        UserReview userReview1 = new UserReview("a", "bla", "con");
         UserReview userReview2 = new UserReview("b", "blark", "conasdsdf");
         UserReview userReview3 = new UserReview("c", "asda", "conllklkl");
@@ -63,5 +75,5 @@ public class LoadCommentsUseCase {
         UserReviewResponse userReviewResponse = new UserReviewResponse(movieId, 1, 1, 4, reviews );
 
         return Observable.just(userReviewResponse);
-    }
+    }*/
 }

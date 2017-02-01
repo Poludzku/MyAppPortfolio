@@ -8,6 +8,7 @@ import com.poludzku.spotifystreamer.movie.domain.ChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.movie.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.movie.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.movie.presenter.MoviePresenterImpl;
+import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
 import com.poludzku.spotifystreamer.movie.view.MovieDetailsAdapter;
 import com.poludzku.spotifystreamer.movie.view.MovieDetailsAdapterImpl;
 import com.poludzku.spotifystreamer.movie.view.MovieView;
@@ -30,8 +31,8 @@ public class MovieModule {
     }
 
     @Provides
-    LoadCommentsUseCase loadCommentsUseCase() {
-        return new LoadCommentsUseCase();
+    LoadCommentsUseCase loadCommentsUseCase(ReviewRepository reviewRepository) {
+        return new LoadCommentsUseCase(reviewRepository);
     }
 
     @Provides

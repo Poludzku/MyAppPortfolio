@@ -11,7 +11,7 @@ import dagger.Component;
  * Created by Jacek on 23/11/2016.
  */
 @PerApplication
-@Component(modules = {SpotifystreamerModule.class})
+@Component(modules = {SpotifystreamerModule.class, RetrofitModule.class})
 public interface SpotifystreamerComponent {
     void inject(SpotifystreamerApplication application);
 
