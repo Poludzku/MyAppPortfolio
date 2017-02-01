@@ -2,15 +2,15 @@ package com.poludzku.spotifystreamer.app.repository;
 
 import com.example.greed.spotifystreamer.BuildConfig;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
-import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
-import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.ReviewRepository;
+import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 
 import rx.Observable;
 
 /**
  * Created by greed on 06/10/15.
  */
-public class RetrofitHelper implements ReviewRepository {
+public class RetrofitHelper implements ReviewRepository, MoviesRepository {
     private MovieApi mMovieApi;
 
 

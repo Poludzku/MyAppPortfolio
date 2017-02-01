@@ -2,8 +2,10 @@ package com.poludzku.spotifystreamer.app.injection;
 
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.app.injection.scopes.PerApplication;
-import com.poludzku.spotifystreamer.movie.injection.MovieComponent;
-import com.poludzku.spotifystreamer.movie.injection.MovieModule;
+import com.poludzku.spotifystreamer.dashboard.injection.DashboardComponent;
+import com.poludzku.spotifystreamer.dashboard.injection.DashboardModule;
+import com.poludzku.spotifystreamer.moviedetails.injection.MovieComponent;
+import com.poludzku.spotifystreamer.moviedetails.injection.MovieModule;
 
 import dagger.Component;
 
@@ -15,5 +17,6 @@ import dagger.Component;
 public interface SpotifystreamerComponent {
     void inject(SpotifystreamerApplication application);
 
+    DashboardComponent plus(DashboardModule module);
     MovieComponent plus(MovieModule module);
 }

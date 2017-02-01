@@ -1,7 +1,7 @@
 package com.poludzku.spotifystreamer.app.repository;
 
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
-import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

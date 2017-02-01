@@ -3,8 +3,9 @@ package com.poludzku.spotifystreamer.app.injection;
 import com.poludzku.spotifystreamer.app.injection.scopes.PerApplication;
 import com.poludzku.spotifystreamer.app.repository.MovieApi;
 import com.poludzku.spotifystreamer.app.repository.MovieApiFactory;
+import com.poludzku.spotifystreamer.app.repository.MoviesRepository;
 import com.poludzku.spotifystreamer.app.repository.RetrofitHelper;
-import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
+import com.poludzku.spotifystreamer.moviedetails.repository.ReviewRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,6 +25,12 @@ public class RetrofitModule {
     @PerApplication
     @Provides
     ReviewRepository reviewRepository(RetrofitHelper retrofitHelper) {
+        return retrofitHelper;
+    }
+
+    @PerApplication
+    @Provides
+    MoviesRepository moviesRepository(RetrofitHelper retrofitHelper) {
         return retrofitHelper;
     }
 
