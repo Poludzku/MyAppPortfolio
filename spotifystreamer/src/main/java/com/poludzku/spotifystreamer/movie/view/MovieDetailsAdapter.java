@@ -2,7 +2,7 @@ package com.poludzku.spotifystreamer.movie.view;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
 
 /**

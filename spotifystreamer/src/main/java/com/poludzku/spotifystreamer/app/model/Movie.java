@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.io.model;
+package com.poludzku.spotifystreamer.app.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

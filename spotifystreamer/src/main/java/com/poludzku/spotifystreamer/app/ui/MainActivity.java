@@ -1,4 +1,4 @@
-package com.poludzku.spotifystreamer.ui;
+package com.poludzku.spotifystreamer.app.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;

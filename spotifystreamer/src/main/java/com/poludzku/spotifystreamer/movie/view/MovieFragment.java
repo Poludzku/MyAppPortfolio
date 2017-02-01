@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.movie.injection.MovieModule;
 import com.poludzku.spotifystreamer.movie.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;

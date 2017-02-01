@@ -2,7 +2,6 @@ package com.poludzku.spotifystreamer.dashboard;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,8 +16,10 @@ import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
-import com.poludzku.spotifystreamer.io.model.Movie;
-import com.poludzku.spotifystreamer.io.model.MovieResponse;
+import com.poludzku.spotifystreamer.app.repository.MovieApiFactory;
+import com.poludzku.spotifystreamer.app.repository.RetrofitHelper;
+import com.poludzku.spotifystreamer.app.model.Movie;
+import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.movie.view.MovieFragment;
 
 import java.util.HashSet;

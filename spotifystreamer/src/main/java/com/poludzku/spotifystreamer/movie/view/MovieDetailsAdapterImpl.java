@@ -2,10 +2,9 @@ package com.poludzku.spotifystreamer.movie.view;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.movie.repository.UserReview;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
 import com.squareup.picasso.Picasso;

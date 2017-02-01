@@ -1,11 +1,9 @@
-package com.poludzku.spotifystreamer.dashboard;
+package com.poludzku.spotifystreamer.app.repository;
 
 import com.example.greed.spotifystreamer.BuildConfig;
-import com.poludzku.spotifystreamer.io.model.MovieResponse;
+import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
 import com.poludzku.spotifystreamer.movie.repository.UserReviewResponse;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 

@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
-import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.app.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;

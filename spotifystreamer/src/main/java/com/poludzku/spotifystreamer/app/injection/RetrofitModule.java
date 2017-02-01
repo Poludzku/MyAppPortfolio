@@ -1,10 +1,9 @@
 package com.poludzku.spotifystreamer.app.injection;
 
 import com.poludzku.spotifystreamer.app.injection.scopes.PerApplication;
-import com.poludzku.spotifystreamer.dashboard.MovieApi;
-import com.poludzku.spotifystreamer.dashboard.MovieApiFactory;
-import com.poludzku.spotifystreamer.dashboard.RetrofitHelper;
-import com.poludzku.spotifystreamer.io.model.Movie;
+import com.poludzku.spotifystreamer.app.repository.MovieApi;
+import com.poludzku.spotifystreamer.app.repository.MovieApiFactory;
+import com.poludzku.spotifystreamer.app.repository.RetrofitHelper;
 import com.poludzku.spotifystreamer.movie.repository.ReviewRepository;
 
 import dagger.Module;
