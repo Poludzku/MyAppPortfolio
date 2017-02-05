@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="dashboard_width">250dp</dimen>
+    <dimen name="placeholder_width">125dp</dimen>
+    <dimen name="placeholder_height">188dp</dimen>
+</resources>

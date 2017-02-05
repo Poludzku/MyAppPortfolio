@@ -30,7 +30,8 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     private static final int SORT_BY_POPULARITY = 0;
     private static final int SORT_BY_RATING = 1;
     private static final String SORT_ORDER_EXTRA = "sort_order_extra";
-    private final MovieAdapter adapter = new MovieAdapter(this);
+    @Inject
+    MovieAdapter adapter;
     @Inject
     MoviePresenter moviePresenter;
     private RecyclerView mRecyclerView;
@@ -43,7 +44,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SpotifystreamerApplication.getInstance().getComponent().plus(new DashboardModule(this)).inject(this);
+        SpotifystreamerApplication.getInstance().getComponent().plus(new DashboardModule(this, this)).inject(this);
         setHasOptionsMenu(true);
     }
 

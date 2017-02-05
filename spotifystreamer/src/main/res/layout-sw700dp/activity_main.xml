@@ -10,15 +10,15 @@
 
     <FrameLayout
         android:id="@+id/dashboard"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dashboard_width"
         android:layout_height="match_parent"
-        android:layout_weight="2"></FrameLayout>
+        />
 
     <FrameLayout
         android:id="@+id/details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        />
 
 
 </LinearLayout>

@@ -11,6 +11,9 @@ import com.poludzku.spotifystreamer.dashboard.domain.DownloadMoviesUseCase;
 import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.dashboard.presenter.MoviePresenterImpl;
 import com.poludzku.spotifystreamer.dashboard.view.DashboardView;
+import com.poludzku.spotifystreamer.dashboard.view.MovieAdapter;
+import com.poludzku.spotifystreamer.dashboard.view.MovieViewHolder;
+import com.squareup.picasso.Picasso;
 
 import dagger.Module;
 import dagger.Provides;
@@ -22,9 +25,11 @@ import dagger.Provides;
 public class DashboardModule {
 
     private DashboardView dashboardView;
+    private MovieViewHolder.OnClick onClick;
 
-    public DashboardModule(DashboardView dashboardView) {
+    public DashboardModule(DashboardView dashboardView, MovieViewHolder.OnClick onClick) {
         this.dashboardView = dashboardView;
+        this.onClick = onClick;
     }
 
     @PerFragment
@@ -58,5 +63,12 @@ public class DashboardModule {
     @ForFavourites
     DownloadMoviesUseCase downloadMoviesByFavouritesUseCase(DownloadMoviesByFavouritesUseCase downloadMoviesByPopularityUseCase) {
         return downloadMoviesByPopularityUseCase;
+    }
+
+    @PerFragment
+    @Provides
+    MovieAdapter movieAdapter(Picasso picasso){
+        return new MovieAdapter(onClick, picasso);
+
     }
 }

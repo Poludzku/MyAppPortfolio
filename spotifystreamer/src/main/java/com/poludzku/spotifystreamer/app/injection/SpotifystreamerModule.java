@@ -27,7 +27,9 @@ public class SpotifystreamerModule {
 
     @Provides
     Picasso providePicasso() {
-        return Picasso.with(application);
+        Picasso picasso = Picasso.with(application);
+        picasso.setLoggingEnabled(true);
+        return picasso;
     }
 
     @Provides

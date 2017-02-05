@@ -1,15 +1,22 @@
 package com.poludzku.spotifystreamer.dashboard.view;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.model.Movie;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import static java.lang.System.load;
 
 /**
  * Created by greed on 22/09/15.
@@ -20,8 +27,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     private final List<Movie> movies = new ArrayList<>();
     private final MovieViewHolder.OnClick listener;
 
-    public MovieAdapter(MovieViewHolder.OnClick listener) {
+    Picasso picasso;
+
+    public MovieAdapter(MovieViewHolder.OnClick listener, Picasso picasso) {
         this.listener = listener;
+        this.picasso = picasso;
     }
 
     public void setMovies(List<Movie> movies) {
@@ -44,20 +54,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieViewHolder> {
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        //TODO
-        //SpotifystreamerApplication.getInstance()
-        //      .getPicasso()
-        //    .load(getPosterPath(movie.getMoviePoster()))
-        //  .into(holder.imageView);
+        picasso.load(getPosterPath(movie.getMoviePoster()))
+        .into(holder.imageView);
 
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(MovieViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        //TODO
-        //SpotifystreamerApplication.getInstance().getPicasso().cancelRequest(holder.imageView);
-        holder.imageView.setImageDrawable(null);
     }
 
     private String getPosterPath(String image) {
