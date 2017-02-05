@@ -30,6 +30,10 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     private static final int SORT_BY_POPULARITY = 0;
     private static final int SORT_BY_RATING = 1;
     private static final String SORT_ORDER_EXTRA = "sort_order_extra";
+    private static final String CURRENT_ID_EXTRA = "current_id_extra";
+
+    int currentSelectedId;
+
     @Inject
     MovieAdapter adapter;
     @Inject
@@ -57,6 +61,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
         mRecyclerView.setAdapter(adapter);
         if (savedInstanceState != null) {
             sortOrder = savedInstanceState.getInt(SORT_ORDER_EXTRA);
+            currentSelectedId = savedInstanceState.getInt(CURRENT_ID_EXTRA);
         }
 
         return view;
@@ -80,6 +85,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SORT_ORDER_EXTRA, sortOrder);
+        outState.putInt(CURRENT_ID_EXTRA,currentSelectedId);
     }
 
     @Override
@@ -113,6 +119,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
 
     @Override
     public void onClick(int id) {
+        currentSelectedId = id;
         Movie movie = adapter.getMovie(id);
         Fragment topFragment = getFragmentManager().findFragmentByTag(MovieFragment.TAG);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -128,7 +135,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     public void populateMovies(MovieResponse movieResponse) {
         adapter.setMovies(movieResponse.getResults());
         if (movieResponse.getResults().size() > 0 && getResources().getBoolean(R.bool.isTablet)) {
-            onClick(0);
+            onClick(currentSelectedId);
         }
     }
 
