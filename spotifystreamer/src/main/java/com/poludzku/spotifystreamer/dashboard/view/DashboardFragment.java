@@ -29,6 +29,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     public static final String FAVOURITES = "FAVOURITES";
     private static final int SORT_BY_POPULARITY = 0;
     private static final int SORT_BY_RATING = 1;
+    private static final int SORT_BY_FAVOURITES = 2;
     private static final String SORT_ORDER_EXTRA = "sort_order_extra";
     private static final String CURRENT_ID_EXTRA = "current_id_extra";
 
@@ -76,6 +77,9 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
             case SORT_BY_RATING:
                 moviePresenter.downloadMoviesByRating();
                 break;
+            case SORT_BY_FAVOURITES:
+                moviePresenter.downloadMoviesByFavourites();
+                break;
             default:
         }
     }
@@ -109,6 +113,10 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
             case R.id.sort_by_rating:
                 sortOrder = SORT_BY_RATING;
                 moviePresenter.downloadMoviesByRating();
+                return true;
+            case R.id.sort_by_favourites:
+                sortOrder = SORT_BY_FAVOURITES;
+                moviePresenter.downloadMoviesByFavourites();
                 return true;
             default:
                 break;

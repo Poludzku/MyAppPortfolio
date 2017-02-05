@@ -15,57 +15,33 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Scheduler;
-import rx.Subscription;
 
 import static com.poludzku.spotifystreamer.dashboard.view.DashboardFragment.FAVOURITES;
+
 
 /**
  * Created by Jacek on 01/02/2017.
  */
 
-public class DownloadMoviesByPopularityUseCase implements DownloadMoviesUseCase {
+public class DownloadMoviesByPopularityUseCase extends AbstractDownloadMoviesUseCase {
 
-    private final Scheduler mainThreadScheduler;
-    private final Scheduler ioThreadScheduler;
-    private final SharedPreferences sharedPreferences;
     private final MoviesRepository moviesRepository;
-
-    private DownloadMoviesUseCaseCallback callback;
-    private Subscription subscription;
+    private final SharedPreferences sharedPreferences;
 
     @Inject
     public DownloadMoviesByPopularityUseCase(@ForMainThread Scheduler mainThreadScheduler, @ForIoThread Scheduler ioThreadScheduler, SharedPreferences sharedPreferences, MoviesRepository moviesRepository) {
-        this.mainThreadScheduler = mainThreadScheduler;
-        this.ioThreadScheduler = ioThreadScheduler;
-        this.sharedPreferences = sharedPreferences;
+        super(mainThreadScheduler, ioThreadScheduler);
         this.moviesRepository = moviesRepository;
+        this.sharedPreferences = sharedPreferences;
     }
 
-    public void setCallback(DownloadMoviesUseCaseCallback callback) {
-        this.callback = callback;
+    @Override
+    public Observable<MovieResponse> createDownloadObservable() {
+        return moviesRepository.downloadMoviesByPopularity();
     }
 
-    public void execute() {
-        Observable<MovieResponse> observable = moviesRepository.downloadMoviesByPopularity();
-        subscription = observable
-                .observeOn(mainThreadScheduler)
-                .subscribeOn(ioThreadScheduler)
-                .map(this::mapFavourites)
-                .subscribe(
-                        this::onMoviesDownloaded,
-                        this::onMoviesDownloadError
-                );
-    }
-
-    public void cleanup() {
-        if (subscription != null) {
-            subscription.unsubscribe();
-            subscription = null;
-        }
-        callback = null;
-    }
-
-    private MovieResponse mapFavourites(MovieResponse origin) {
+    @Override
+    public MovieResponse mapFavourites(MovieResponse origin){
 
         Set<String> favourites = sharedPreferences.getStringSet(FAVOURITES, new HashSet<>());
         if (favourites.size() == 0) return origin;
@@ -80,13 +56,4 @@ public class DownloadMoviesByPopularityUseCase implements DownloadMoviesUseCase 
         }
         return origin;
     }
-
-    private void onMoviesDownloaded(MovieResponse movieResponse) {
-        callback.onMoviesDownloaded(movieResponse);
-    }
-
-    private void onMoviesDownloadError(Throwable throwable) {
-        callback.onMoviesDownloadError(throwable);
-    }
-
 }
