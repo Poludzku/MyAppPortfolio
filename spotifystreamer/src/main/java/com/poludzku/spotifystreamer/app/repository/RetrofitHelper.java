@@ -4,13 +4,15 @@ import com.example.greed.spotifystreamer.BuildConfig;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.moviedetails.repository.ReviewRepository;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.VideoRepository;
+import com.poludzku.spotifystreamer.moviedetails.repository.VideoResponse;
 
 import rx.Observable;
 
 /**
  * Created by greed on 06/10/15.
  */
-public class RetrofitHelper implements ReviewRepository, MoviesRepository {
+public class RetrofitHelper implements ReviewRepository, MoviesRepository, VideoRepository {
     private MovieApi mMovieApi;
 
 
@@ -30,4 +32,8 @@ public class RetrofitHelper implements ReviewRepository, MoviesRepository {
         return mMovieApi.getUserReviews(movieId, BuildConfig.MOVIE_KEY);
     }
 
+    @Override
+    public Observable<VideoResponse> loadVideos(long movieId) {
+        return mMovieApi.getVideos(movieId, BuildConfig.MOVIE_KEY);
+    }
 }

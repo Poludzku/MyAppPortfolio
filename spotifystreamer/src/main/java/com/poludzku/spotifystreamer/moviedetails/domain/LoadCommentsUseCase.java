@@ -43,30 +43,5 @@ public class LoadCommentsUseCase {
     private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId) {
         return reviewRepository.loadComments(movieId);
     }
-    /*private Observable<UserReviewResponse> createLoadCommentsObservable(long movieId){
-       UserReview userReview1 = new UserReview("a", "bla", "con");
-        UserReview userReview2 = new UserReview("b", "blark", "conasdsdf");
-        UserReview userReview3 = new UserReview("c", "asda", "conllklkl");
-        UserReview userReview4 = new UserReview("d", "cvnfkg", "con12342q");
-        List<UserReview> reviews = new ArrayList<>();
-        reviews.add(userReview1);
-        reviews.add(userReview2);
-        reviews.add(userReview3);
-        reviews.add(userReview1);
-        reviews.add(userReview2);
-        reviews.add(userReview3);
-        reviews.add(userReview1);
-        reviews.add(userReview2);
-        reviews.add(userReview3);
-        reviews.add(userReview4);
-        reviews.add(userReview4);
-        reviews.add(userReview4);
-        reviews.add(userReview1);
-        reviews.add(userReview2);
-        reviews.add(userReview3);
-        reviews.add(userReview4);
-        UserReviewResponse userReviewResponse = new UserReviewResponse(movieId, 1, 1, 4, reviews );
 
-        return Observable.just(userReviewResponse);
-    }*/
 }

@@ -2,6 +2,7 @@ package com.poludzku.spotifystreamer.app.repository;
 
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.VideoResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -21,4 +22,7 @@ public interface MovieApi {
 
     @GET("/3/movie/{movie_id}/reviews")
     Observable<UserReviewResponse> getUserReviews(@Path("movie_id") long movieId, @Query("api_key") String key);
+
+    @GET("/3/movie/{movie_id}/videos")
+    Observable<VideoResponse> getVideos(@Path("movie_id") long movieId, @Query("api_key") String key);
 }
