@@ -15,6 +15,7 @@ import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.moviedetails.injection.MovieModule;
 import com.poludzku.spotifystreamer.moviedetails.presenter.MoviePresenter;
+import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 import com.squareup.picasso.Picasso;
 
@@ -83,8 +84,8 @@ public class MovieFragment extends Fragment implements MovieView {
     }
 
     @Override
-    public void addUserReviews(UserReviewResponse userReviewResponse) {
-        adapter.setDetails(userReviewResponse, movie);
+    public void addMovieDetails(MovieDetails movieDetails) {
+        adapter.setDetails(movieDetails, movie);
     }
 
     private String getPosterPath(String image) {

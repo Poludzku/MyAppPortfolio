@@ -1,5 +1,6 @@
 package com.poludzku.spotifystreamer.moviedetails.domain;
 
+import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 
 /**
@@ -9,6 +10,6 @@ import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 public interface LoadCommentsUseCaseCallback {
     void onUserReviewError(Throwable throwable);
 
-    void onUserReviewResponse(UserReviewResponse userReviewResponse);
+    void onMovieDetailsResponse(MovieDetails movieDetails);
 }
 

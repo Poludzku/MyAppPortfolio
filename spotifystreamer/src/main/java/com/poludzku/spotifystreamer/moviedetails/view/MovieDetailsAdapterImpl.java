@@ -5,8 +5,10 @@ import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.model.Movie;
+import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReview;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.Video;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import javax.inject.Inject;
 public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     public static final int REVIEW = 0;
     public static final int HEADER = 1;
+    public static final int VIDEO = 2;
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
     Picasso picasso;
     MovieView movieView;
@@ -33,10 +36,13 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     }
 
     @Override
-    void setDetails(UserReviewResponse userReviewResponse, Movie movie) {
+    void setDetails(MovieDetails movieDetails, Movie movie) {
         reviews.clear();
         reviews.add(new Wrapper(movie));
-        for (UserReview userReview : userReviewResponse.getResults()) {
+        for (Video video : movieDetails.getVideoResponse().getResults()){
+            reviews.add(new Wrapper(video));
+        }
+        for (UserReview userReview : movieDetails.getUserReviewResponse().getResults()) {
             reviews.add(new Wrapper(userReview));
         }
         notifyDataSetChanged();
@@ -54,6 +60,10 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
                 return new MovieDetailsViewHolder(LayoutInflater
                         .from(parent.getContext())
                         .inflate(R.layout.item_movie_detail, parent, false));
+            case VIDEO:
+                return new MovieVideoViewHolder(LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(R.layout.item_video, parent, false));
 
         }
         throw new IllegalArgumentException("Unexpected View Type!!");
@@ -93,7 +103,13 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? HEADER : REVIEW;
+       if (position == 0){
+           return HEADER;
+       }
+       if (reviews.get(position).video != null){
+           return VIDEO;
+       }
+       return REVIEW;
     }
 
     private String getPosterPath(String image) {
@@ -107,6 +123,11 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     static class Wrapper {
         Movie movie;
         UserReview userReview;
+        Video video;
+
+        public Wrapper(Video video) {
+            this.video = video;
+        }
 
         public Wrapper(Movie movie) {
             this.movie = movie;

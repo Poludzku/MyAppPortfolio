@@ -3,7 +3,7 @@ package com.poludzku.spotifystreamer.moviedetails.presenter;
 import com.poludzku.spotifystreamer.moviedetails.domain.ChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.LoadCommentsUseCaseCallback;
-import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
+import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.view.MovieView;
 
 import javax.inject.Inject;
@@ -37,8 +37,8 @@ public class MoviePresenterImpl implements MoviePresenter, LoadCommentsUseCaseCa
     }
 
     @Override
-    public void onUserReviewResponse(UserReviewResponse userReviewResponse) {
-        view.addUserReviews(userReviewResponse);
+    public void onMovieDetailsResponse(MovieDetails movieDetails) {
+        view.addMovieDetails(movieDetails);
     }
 
     @Override

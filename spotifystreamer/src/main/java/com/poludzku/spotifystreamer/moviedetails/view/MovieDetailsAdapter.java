@@ -3,6 +3,7 @@ package com.poludzku.spotifystreamer.moviedetails.view;
 import android.support.v7.widget.RecyclerView;
 
 import com.poludzku.spotifystreamer.app.model.Movie;
+import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 
 /**
@@ -10,6 +11,6 @@ import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
  */
 
 public abstract class MovieDetailsAdapter extends RecyclerView.Adapter<AbstractMovieViewHolder> {
-    abstract void setDetails(UserReviewResponse userReviewResponse, Movie movie);
+    abstract void setDetails(MovieDetails movieDetails, Movie movie);
 
 }
