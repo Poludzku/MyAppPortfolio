@@ -1,8 +1,10 @@
 package com.poludzku.spotifystreamer.moviedetails.injection;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.poludzku.spotifystreamer.moviedetails.domain.ChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.LoadCommentsUseCase;
@@ -13,6 +15,7 @@ import com.poludzku.spotifystreamer.moviedetails.repository.VideoRepository;
 import com.poludzku.spotifystreamer.moviedetails.view.MovieDetailsAdapter;
 import com.poludzku.spotifystreamer.moviedetails.view.MovieDetailsAdapterImpl;
 import com.poludzku.spotifystreamer.moviedetails.view.MovieView;
+import com.poludzku.spotifystreamer.moviedetails.view.OpenVideoCallback;
 import com.squareup.picasso.Picasso;
 
 import dagger.Module;
@@ -21,9 +24,11 @@ import dagger.Provides;
 @Module
 public class MovieModule {
     private MovieView view;
+    private OpenVideoCallback callback;
 
-    public MovieModule(MovieView view) {
+    public MovieModule(MovieView view, OpenVideoCallback callback) {
         this.view = view;
+        this.callback = callback;
     }
 
     @Provides
@@ -47,12 +52,17 @@ public class MovieModule {
     }
 
     @Provides
+    OpenVideoCallback callback(){
+        return callback;
+    }
+
+    @Provides
     RecyclerView.LayoutManager linearLayoutManager() {
         return new LinearLayoutManager(null, LinearLayoutManager.VERTICAL, false);
     }
 
     @Provides
-    MovieDetailsAdapter adapter(Picasso picasso) {
-        return new MovieDetailsAdapterImpl(picasso, view);
+    MovieDetailsAdapter adapter(Picasso picasso, Resources resources) {
+        return new MovieDetailsAdapterImpl(picasso, view, resources, callback);
     }
 }

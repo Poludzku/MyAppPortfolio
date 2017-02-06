@@ -2,6 +2,7 @@ package com.poludzku.spotifystreamer.app.injection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import com.example.greed.spotifystreamer.BuildConfig;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
@@ -30,6 +31,11 @@ public class SpotifystreamerModule {
         Picasso picasso = Picasso.with(application);
         picasso.setLoggingEnabled(true);
         return picasso;
+    }
+    @Provides
+    @PerApplication
+    Resources resources(){
+        return application.getResources();
     }
 
     @Provides

@@ -1,10 +1,12 @@
 package com.poludzku.spotifystreamer.moviedetails.view;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.example.greed.spotifystreamer.R;
 import com.poludzku.spotifystreamer.app.model.Movie;
+import com.poludzku.spotifystreamer.dashboard.view.MovieViewHolder;
 import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReview;
 import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
@@ -26,13 +28,17 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
     public static final int VIDEO = 2;
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w500/";
     Picasso picasso;
+    OpenVideoCallback callback;
     MovieView movieView;
+    Resources resources;
     List<Wrapper> reviews = new ArrayList<>();
 
     @Inject
-    public MovieDetailsAdapterImpl(Picasso picasso, MovieView movieView) {
+    public MovieDetailsAdapterImpl(Picasso picasso, MovieView movieView, Resources resources, OpenVideoCallback callback) {
         this.picasso = picasso;
         this.movieView = movieView;
+        this.resources = resources;
+        this.callback = callback;
     }
 
     @Override
@@ -93,6 +99,12 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
                 });
 
                 picasso.load(getPosterPath(movie.getMoviePoster())).into(detailsHolder.movieDetailsPoster);
+                break;
+            case VIDEO:
+                Video video = reviews.get(position).video;
+                MovieVideoViewHolder movieVideoViewHolder = (MovieVideoViewHolder) holder;
+                movieVideoViewHolder.openTrailer.setText(String.format(resources.getString(R.string.open_video), video.getType()));
+                movieVideoViewHolder.openTrailer.setOnClickListener(v -> openVideo(video.getKey()));
         }
     }
 
@@ -118,6 +130,10 @@ public class MovieDetailsAdapterImpl extends MovieDetailsAdapter {
 
     private void checkedChanged(boolean favourite) {
         movieView.onFavouriteChanged(favourite);
+    }
+
+    private void openVideo(String key){
+        callback.openVideo(key);
     }
 
     static class Wrapper {

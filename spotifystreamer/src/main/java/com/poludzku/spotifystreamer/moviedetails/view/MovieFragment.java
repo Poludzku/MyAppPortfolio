@@ -1,6 +1,10 @@
 package com.poludzku.spotifystreamer.moviedetails.view;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +15,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.greed.spotifystreamer.R;
+import com.google.android.youtube.player.YouTubeIntents;
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.moviedetails.injection.MovieModule;
 import com.poludzku.spotifystreamer.moviedetails.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.moviedetails.repository.MovieDetails;
-import com.poludzku.spotifystreamer.moviedetails.repository.UserReviewResponse;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -27,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * Created by greed on 01/11/15.
  */
-public class MovieFragment extends Fragment implements MovieView {
+public class MovieFragment extends Fragment implements MovieView, OpenVideoCallback {
 
     public static final String TAG = "MovieFragment";
 
@@ -71,7 +75,7 @@ public class MovieFragment extends Fragment implements MovieView {
         movie = getArguments().getParcelable(MOVIE_EXTRA);
 
         ButterKnife.bind(this, view);
-        SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule(this)).inject(this);
+        SpotifystreamerApplication.getInstance().getComponent().plus(new MovieModule(this, this)).inject(this);
         picasso.load(getPosterPath(movie.getBackdropImage())).into(movieDetailsBackdropImage);
         detailsRecycleView.setLayoutManager(layoutManager);
         detailsRecycleView.setAdapter(adapter);
@@ -95,5 +99,12 @@ public class MovieFragment extends Fragment implements MovieView {
     @Override
     public void onFavouriteChanged(boolean favourite) {
         moviePresenter.changeFavourite(movie.getId(), favourite);
+    }
+
+    @Override
+    public void openVideo(String key) {
+        Intent intent = YouTubeIntents.createPlayVideoIntent(getActivity(),key);
+        startActivity(intent);
+
     }
 }
