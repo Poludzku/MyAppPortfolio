@@ -8,6 +8,7 @@ import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.app.repository.MoviesRepository;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class DownloadMoviesByFavouritesUseCase extends AbstractDownloadMoviesUse
                 }
             }
         }
-        origin.getResults().sort((firstMovie,secondMovie) ->{
+        Collections.sort(origin.getResults(), ((firstMovie,secondMovie) ->{
             if(firstMovie.isFavourite() == secondMovie.isFavourite()) {
                 return 0;
             }
@@ -61,7 +62,7 @@ public class DownloadMoviesByFavouritesUseCase extends AbstractDownloadMoviesUse
                 return -1;
             }
             return 1;
-        });
+        }));
         return origin;
     }
 }
