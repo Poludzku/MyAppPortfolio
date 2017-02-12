@@ -3,6 +3,7 @@ package com.poludzku.spotifystreamer.dashboard.view;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     private static final int SORT_BY_FAVOURITES = 2;
     private static final String SORT_ORDER_EXTRA = "sort_order_extra";
     private static final String CURRENT_ID_EXTRA = "current_id_extra";
+    private static final String LIST_STATE_EXTRA = "list_state_extra";
 
     int currentSelectedId;
 
@@ -39,6 +41,11 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     MovieAdapter adapter;
     @Inject
     MoviePresenter moviePresenter;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+
+    private Parcelable mListState;
+
     private RecyclerView mRecyclerView;
     private int sortOrder = SORT_BY_POPULARITY;
 
@@ -49,7 +56,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SpotifystreamerApplication.getInstance().getComponent().plus(new DashboardModule(this, this)).inject(this);
+        SpotifystreamerApplication.getInstance().getComponent().plus(new DashboardModule(getActivity(),this, this)).inject(this);
         setHasOptionsMenu(true);
     }
 
@@ -58,15 +65,18 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
         if (savedInstanceState != null) {
             sortOrder = savedInstanceState.getInt(SORT_ORDER_EXTRA);
             currentSelectedId = savedInstanceState.getInt(CURRENT_ID_EXTRA);
+            mListState = savedInstanceState.getParcelable(LIST_STATE_EXTRA);
         }
 
         return view;
     }
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -90,6 +100,7 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
         super.onSaveInstanceState(outState);
         outState.putInt(SORT_ORDER_EXTRA, sortOrder);
         outState.putInt(CURRENT_ID_EXTRA,currentSelectedId);
+        outState.putParcelable(LIST_STATE_EXTRA, mLayoutManager.onSaveInstanceState());
     }
 
     @Override
@@ -109,14 +120,17 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
             case R.id.sort_by_popularity:
                 sortOrder = SORT_BY_POPULARITY;
                 moviePresenter.downloadMoviesByPopularity();
+                mLayoutManager.scrollToPosition(0);
                 return true;
             case R.id.sort_by_rating:
                 sortOrder = SORT_BY_RATING;
                 moviePresenter.downloadMoviesByRating();
+                mLayoutManager.scrollToPosition(0);
                 return true;
             case R.id.sort_by_favourites:
                 sortOrder = SORT_BY_FAVOURITES;
                 moviePresenter.downloadMoviesByFavourites();
+                mLayoutManager.scrollToPosition(0);
                 return true;
             default:
                 break;
@@ -142,6 +156,10 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     @Override
     public void populateMovies(MovieResponse movieResponse) {
         adapter.setMovies(movieResponse.getResults());
+        if(mListState != null) {
+            mLayoutManager.onRestoreInstanceState(mListState);
+            mListState = null;
+        }
         if (movieResponse.getResults().size() > 0 && getResources().getBoolean(R.bool.isTablet)) {
             onClick(currentSelectedId);
         }

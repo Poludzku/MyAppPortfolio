@@ -1,5 +1,9 @@
 package com.poludzku.spotifystreamer.dashboard.injection;
 
+import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForFavourites;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForPopularity;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForRating;
@@ -26,8 +30,10 @@ public class DashboardModule {
 
     private DashboardView dashboardView;
     private MovieViewHolder.OnClick onClick;
+    private Context context;
 
-    public DashboardModule(DashboardView dashboardView, MovieViewHolder.OnClick onClick) {
+    public DashboardModule(Context context, DashboardView dashboardView, MovieViewHolder.OnClick onClick) {
+        this.context = context;
         this.dashboardView = dashboardView;
         this.onClick = onClick;
     }
@@ -71,4 +77,11 @@ public class DashboardModule {
         return new MovieAdapter(onClick, picasso);
 
     }
+
+    @PerFragment
+    @Provides
+    RecyclerView.LayoutManager layoutManager() {
+        return new GridLayoutManager(context, 2);
+    }
+
 }
