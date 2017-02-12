@@ -2,6 +2,7 @@ package com.poludzku.spotifystreamer.app.injection;
 
 import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.app.injection.scopes.PerApplication;
+import com.poludzku.spotifystreamer.app.repository.FavouritesContentProvider;
 import com.poludzku.spotifystreamer.dashboard.injection.DashboardComponent;
 import com.poludzku.spotifystreamer.dashboard.injection.DashboardModule;
 import com.poludzku.spotifystreamer.moviedetails.injection.MovieComponent;

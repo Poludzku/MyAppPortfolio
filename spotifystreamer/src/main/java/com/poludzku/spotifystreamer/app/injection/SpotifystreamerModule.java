@@ -9,6 +9,7 @@ import com.poludzku.spotifystreamer.app.SpotifystreamerApplication;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForIoThread;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForMainThread;
 import com.poludzku.spotifystreamer.app.injection.scopes.PerApplication;
+import com.poludzku.spotifystreamer.app.repository.SpotifyStreamerDatabase;
 import com.squareup.picasso.Picasso;
 
 import dagger.Module;
@@ -32,9 +33,10 @@ public class SpotifystreamerModule {
         picasso.setLoggingEnabled(true);
         return picasso;
     }
+
     @Provides
     @PerApplication
-    Resources resources(){
+    Resources resources() {
         return application.getResources();
     }
 
@@ -57,5 +59,7 @@ public class SpotifystreamerModule {
     Scheduler ioThreadScheduler() {
         return Schedulers.io();
     }
+
+
 
 }
