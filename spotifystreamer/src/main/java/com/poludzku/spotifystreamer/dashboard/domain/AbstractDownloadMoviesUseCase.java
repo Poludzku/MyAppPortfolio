@@ -39,7 +39,7 @@ abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUse
                 .observeOn(mainThreadScheduler)
                 .subscribeOn(ioThreadScheduler)
                 .map(this::mapFavourites)
-                .map(this::sortFavourites)
+                .map(this::filterFavourites)
                 .subscribe(
                         this::onMoviesDownloaded,
                         this::onMoviesDownloadError
@@ -73,7 +73,7 @@ abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUse
         return origin;
     }
 
-    protected MovieResponse sortFavourites(MovieResponse origin) {
+    protected MovieResponse filterFavourites(MovieResponse origin) {
         return origin;
     }
 

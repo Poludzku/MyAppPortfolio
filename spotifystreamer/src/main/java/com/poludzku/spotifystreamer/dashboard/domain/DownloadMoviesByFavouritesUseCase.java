@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForIoThread;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForMainThread;
+import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.app.repository.MoviesRepository;
 
@@ -35,16 +36,17 @@ public class DownloadMoviesByFavouritesUseCase extends AbstractDownloadMoviesUse
     }
 
     @Override
-    public MovieResponse sortFavourites(MovieResponse origin) {
-        Collections.sort(origin.getResults(), ((firstMovie, secondMovie) -> {
-            if (firstMovie.isFavourite() == secondMovie.isFavourite()) {
-                return 0;
+    public MovieResponse filterFavourites(MovieResponse origin) {
+        int index = 0;
+        while (index < origin.getResults().size()) {
+            if(!origin.getResults().get(index).isFavourite()){
+                origin.getResults().remove(index);
+            } else{
+                index++;
             }
-            if (firstMovie.isFavourite()) {
-                return -1;
-            }
-            return 1;
-        }));
+
+        }
+
         return origin;
     }
 }
