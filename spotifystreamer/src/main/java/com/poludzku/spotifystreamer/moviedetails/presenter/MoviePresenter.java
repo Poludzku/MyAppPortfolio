@@ -7,5 +7,5 @@ package com.poludzku.spotifystreamer.moviedetails.presenter;
 public interface MoviePresenter {
     void loadComments(long movieId);
 
-    void changeFavourite(long id, boolean favourite);
+    void changeFavourite(long id, String title, boolean favourite);
 }

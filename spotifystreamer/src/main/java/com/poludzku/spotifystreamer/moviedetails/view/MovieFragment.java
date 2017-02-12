@@ -98,7 +98,7 @@ public class MovieFragment extends Fragment implements MovieView, OpenVideoCallb
 
     @Override
     public void onFavouriteChanged(boolean favourite) {
-        moviePresenter.changeFavourite(movie.getId(), favourite);
+        moviePresenter.changeFavourite(movie.getId(), movie.getTitle(), favourite);
     }
 
     @Override

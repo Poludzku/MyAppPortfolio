@@ -5,5 +5,5 @@ package com.poludzku.spotifystreamer.moviedetails.domain;
  */
 
 public interface ChangeFavouriteUseCase {
-    void setMovieFavourite(long id, boolean favourite);
+    void setMovieFavourite(long id, String title, boolean favourite);
 }

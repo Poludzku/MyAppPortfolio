@@ -19,7 +19,7 @@ public class PreferencesChangeFavouriteUseCase implements ChangeFavouriteUseCase
     }
 
     @Override
-    public void setMovieFavourite(long id, boolean favourite) {
+    public void setMovieFavourite(long id, String title, boolean favourite) {
         String idString = Long.toString(id);
         Set<String> current = sharedPreferences.getStringSet(FAVOURITES, new HashSet<>());
         if (favourite && !current.contains(idString)) {

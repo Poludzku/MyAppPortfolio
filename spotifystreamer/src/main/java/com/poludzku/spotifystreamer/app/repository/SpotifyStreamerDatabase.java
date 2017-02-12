@@ -12,6 +12,9 @@ public class SpotifyStreamerDatabase extends SQLiteOpenHelper {
 
     private static final int CURRENT_VERSION = 1;
 
+    public static final String ID = "_id";
+    public static final String TITLE = "title";
+
     private SpotifyStreamerDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

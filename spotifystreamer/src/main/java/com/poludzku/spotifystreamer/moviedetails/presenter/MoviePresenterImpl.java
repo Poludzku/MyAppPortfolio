@@ -42,7 +42,7 @@ public class MoviePresenterImpl implements MoviePresenter, LoadCommentsUseCaseCa
     }
 
     @Override
-    public void changeFavourite(long id, boolean favourite) {
-        changeFavouriteUseCase.setMovieFavourite(id, favourite);
+    public void changeFavourite(long id,String title, boolean favourite) {
+        changeFavouriteUseCase.setMovieFavourite(id, title, favourite);
     }
 }
