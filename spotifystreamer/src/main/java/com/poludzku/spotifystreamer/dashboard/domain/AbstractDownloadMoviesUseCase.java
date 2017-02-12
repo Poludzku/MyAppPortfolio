@@ -1,36 +1,30 @@
 package com.poludzku.spotifystreamer.dashboard.domain;
 
-import android.content.SharedPreferences;
+import android.content.ContentResolver;
+import android.database.Cursor;
 
-import com.poludzku.spotifystreamer.app.injection.qualifiers.ForIoThread;
-import com.poludzku.spotifystreamer.app.injection.qualifiers.ForMainThread;
 import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
-import com.poludzku.spotifystreamer.app.repository.MoviesRepository;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.inject.Inject;
+import com.poludzku.spotifystreamer.app.repository.FavouritesContentProvider;
 
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscription;
 
-import static com.poludzku.spotifystreamer.dashboard.view.DashboardFragment.FAVOURITES;
-
 /**
  * Created by Jacek on 05/02/2017.
  */
 
-abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUseCase{
+abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUseCase {
     private final Scheduler mainThreadScheduler;
     private final Scheduler ioThreadScheduler;
+    private final ContentResolver contentResolver;
 
     private DownloadMoviesUseCaseCallback callback;
     private Subscription subscription;
 
-    public AbstractDownloadMoviesUseCase(Scheduler mainThreadScheduler,Scheduler ioThreadScheduler) {
+    public AbstractDownloadMoviesUseCase(ContentResolver contentResolver, Scheduler mainThreadScheduler, Scheduler ioThreadScheduler) {
+        this.contentResolver = contentResolver;
         this.mainThreadScheduler = mainThreadScheduler;
         this.ioThreadScheduler = ioThreadScheduler;
     }
@@ -45,6 +39,7 @@ abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUse
                 .observeOn(mainThreadScheduler)
                 .subscribeOn(ioThreadScheduler)
                 .map(this::mapFavourites)
+                .map(this::sortFavourites)
                 .subscribe(
                         this::onMoviesDownloaded,
                         this::onMoviesDownloadError
@@ -61,7 +56,26 @@ abstract public class AbstractDownloadMoviesUseCase implements DownloadMoviesUse
         callback = null;
     }
 
-    abstract MovieResponse mapFavourites(MovieResponse origin);
+    private MovieResponse mapFavourites(MovieResponse origin) {
+        Cursor cursor = contentResolver.query(FavouritesContentProvider.URI, null, null, null, null);
+
+        if (cursor == null || cursor.getCount() == 0) {
+            return origin;
+        }
+        while (cursor.moveToNext()) {
+            for (Movie movie : origin.getResults()) {
+                if (movie.getId() == cursor.getLong(0)) {
+                    movie.setFavourite(true);
+                    break;
+                }
+            }
+        }
+        return origin;
+    }
+
+    protected MovieResponse sortFavourites(MovieResponse origin) {
+        return origin;
+    }
 
     private void onMoviesDownloaded(MovieResponse movieResponse) {
         callback.onMoviesDownloaded(movieResponse);

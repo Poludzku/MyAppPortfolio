@@ -1,22 +1,16 @@
 package com.poludzku.spotifystreamer.dashboard.domain;
 
-import android.content.SharedPreferences;
+import android.content.ContentResolver;
 
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForIoThread;
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForMainThread;
-import com.poludzku.spotifystreamer.app.model.Movie;
 import com.poludzku.spotifystreamer.app.model.MovieResponse;
 import com.poludzku.spotifystreamer.app.repository.MoviesRepository;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Scheduler;
-
-import static com.poludzku.spotifystreamer.dashboard.view.DashboardFragment.FAVOURITES;
 
 
 /**
@@ -26,13 +20,11 @@ import static com.poludzku.spotifystreamer.dashboard.view.DashboardFragment.FAVO
 public class DownloadMoviesByPopularityUseCase extends AbstractDownloadMoviesUseCase {
 
     private final MoviesRepository moviesRepository;
-    private final SharedPreferences sharedPreferences;
 
     @Inject
-    public DownloadMoviesByPopularityUseCase(@ForMainThread Scheduler mainThreadScheduler, @ForIoThread Scheduler ioThreadScheduler, SharedPreferences sharedPreferences, MoviesRepository moviesRepository) {
-        super(mainThreadScheduler, ioThreadScheduler);
+    public DownloadMoviesByPopularityUseCase(@ForMainThread Scheduler mainThreadScheduler, @ForIoThread Scheduler ioThreadScheduler, ContentResolver contentResolver, MoviesRepository moviesRepository) {
+        super(contentResolver, mainThreadScheduler, ioThreadScheduler);
         this.moviesRepository = moviesRepository;
-        this.sharedPreferences = sharedPreferences;
     }
 
     @Override
@@ -40,20 +32,4 @@ public class DownloadMoviesByPopularityUseCase extends AbstractDownloadMoviesUse
         return moviesRepository.downloadMoviesByPopularity();
     }
 
-    @Override
-    public MovieResponse mapFavourites(MovieResponse origin){
-
-        Set<String> favourites = sharedPreferences.getStringSet(FAVOURITES, new HashSet<>());
-        if (favourites.size() == 0) return origin;
-
-        for (Movie movie : origin.getResults()) {
-            for (String favouriteId : favourites) {
-                if (Integer.valueOf(favouriteId).longValue() == movie.getId()) {
-                    movie.setFavourite(true);
-                    break;
-                }
-            }
-        }
-        return origin;
-    }
 }

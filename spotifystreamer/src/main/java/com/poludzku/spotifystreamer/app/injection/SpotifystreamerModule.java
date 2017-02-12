@@ -1,5 +1,6 @@
 package com.poludzku.spotifystreamer.app.injection;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -61,5 +62,9 @@ public class SpotifystreamerModule {
     }
 
 
-
+    @Provides
+    @PerApplication
+    ContentResolver contentResolver() {
+        return application.getContentResolver();
+    }
 }

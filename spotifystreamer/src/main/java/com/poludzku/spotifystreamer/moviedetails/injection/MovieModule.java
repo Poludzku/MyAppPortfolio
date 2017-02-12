@@ -1,11 +1,14 @@
 package com.poludzku.spotifystreamer.moviedetails.injection;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.poludzku.spotifystreamer.moviedetails.domain.ChangeFavouriteUseCase;
+import com.poludzku.spotifystreamer.moviedetails.domain.ContentProviderChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.PreferencesChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.moviedetails.presenter.MoviePresenter;
@@ -42,8 +45,8 @@ public class MovieModule {
     }
 
     @Provides
-    ChangeFavouriteUseCase changeFavouriteUseCase(SharedPreferences sharedPreferences) {
-        return new PreferencesChangeFavouriteUseCase(sharedPreferences);
+    ChangeFavouriteUseCase changeFavouriteUseCase(ContentProviderChangeFavouriteUseCase providerChangeFavouriteUseCase) {
+        return providerChangeFavouriteUseCase;
     }
 
     @Provides

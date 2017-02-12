@@ -1,5 +1,6 @@
 package com.poludzku.spotifystreamer.dashboard.domain;
 
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
 
 import com.poludzku.spotifystreamer.app.injection.qualifiers.ForIoThread;
@@ -25,13 +26,11 @@ import static com.poludzku.spotifystreamer.dashboard.view.DashboardFragment.FAVO
 public class DownloadMoviesByRatingUseCase extends AbstractDownloadMoviesUseCase{
 
     private final MoviesRepository moviesRepository;
-    private final SharedPreferences sharedPreferences;
 
     @Inject
-    public DownloadMoviesByRatingUseCase(@ForMainThread Scheduler mainThreadScheduler, @ForIoThread Scheduler ioThreadScheduler, SharedPreferences sharedPreferences, MoviesRepository moviesRepository) {
-        super(mainThreadScheduler, ioThreadScheduler);
+    public DownloadMoviesByRatingUseCase(@ForMainThread Scheduler mainThreadScheduler, @ForIoThread Scheduler ioThreadScheduler, ContentResolver contentResolver, MoviesRepository moviesRepository) {
+        super(contentResolver, mainThreadScheduler, ioThreadScheduler);
         this.moviesRepository = moviesRepository;
-        this.sharedPreferences = sharedPreferences;
     }
 
     @Override
@@ -39,20 +38,4 @@ public class DownloadMoviesByRatingUseCase extends AbstractDownloadMoviesUseCase
         return moviesRepository.downloadMoviesByRating();
     }
 
-    @Override
-    public MovieResponse mapFavourites(MovieResponse origin){
-
-        Set<String> favourites = sharedPreferences.getStringSet(FAVOURITES, new HashSet<>());
-        if (favourites.size() == 0) return origin;
-
-        for (Movie movie : origin.getResults()) {
-            for (String favouriteId : favourites) {
-                if (Integer.valueOf(favouriteId).longValue() == movie.getId()) {
-                    movie.setFavourite(true);
-                    break;
-                }
-            }
-        }
-        return origin;
-    }
 }
