@@ -4,9 +4,9 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.poludzku.spotifystreamer.moviedetails.domain.ChangeFavouriteUseCase;
+import com.poludzku.spotifystreamer.moviedetails.domain.PreferencesChangeFavouriteUseCase;
 import com.poludzku.spotifystreamer.moviedetails.domain.LoadCommentsUseCase;
 import com.poludzku.spotifystreamer.moviedetails.presenter.MoviePresenter;
 import com.poludzku.spotifystreamer.moviedetails.presenter.MoviePresenterImpl;
@@ -43,7 +43,7 @@ public class MovieModule {
 
     @Provides
     ChangeFavouriteUseCase changeFavouriteUseCase(SharedPreferences sharedPreferences) {
-        return new ChangeFavouriteUseCase(sharedPreferences);
+        return new PreferencesChangeFavouriteUseCase(sharedPreferences);
     }
 
     @Provides
