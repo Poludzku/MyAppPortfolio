@@ -14,10 +14,10 @@ import rx.Observable;
  */
 public interface MovieApi {
 
-    @GET("/3/discover/movie?sort_by=popularity.desc")
+    @GET("/3/movie/popular")
     Observable<MovieResponse> getMoviesByPopularity(@Query("api_key") String key);
 
-    @GET("/3/discover/movie?sort_by=vote_average.desc")
+    @GET("/3/movie/top_rated")
     Observable<MovieResponse> getMoviesByRating(@Query("api_key") String key);
 
     @GET("/3/movie/{movie_id}/reviews")
