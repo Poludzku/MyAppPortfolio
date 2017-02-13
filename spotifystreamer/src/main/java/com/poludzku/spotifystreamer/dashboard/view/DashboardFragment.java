@@ -155,6 +155,10 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
 
     @Override
     public void populateMovies(MovieResponse movieResponse) {
+        if (movieResponse.getResults().size() == 0 && sortOrder == SORT_BY_FAVOURITES){
+            Toast.makeText(getActivity(), "No favourites have been selected", Toast.LENGTH_SHORT).show();
+        }
+
         adapter.setMovies(movieResponse.getResults());
         if(mListState != null) {
             mLayoutManager.onRestoreInstanceState(mListState);
@@ -169,5 +173,6 @@ public class DashboardFragment extends Fragment implements DashboardView, MovieV
     public void showDownloadError(Throwable throwable) {
         Log.e("spotifystreamer", "Download failure " + throwable.getLocalizedMessage());
         Toast.makeText(getActivity(), "Couldn't download anything...", Toast.LENGTH_LONG).show();
+
     }
 }
